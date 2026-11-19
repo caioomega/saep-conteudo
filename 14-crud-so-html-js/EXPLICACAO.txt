@@ -1,0 +1,54 @@
+==================================================================
+  14 - SISTEMA COMPLETO SÓ COM HTML + CSS + JAVASCRIPT
+  (o "PLANO B": funciona em QUALQUER computador)
+==================================================================
+
+QUANDO USAR?
+  - Se o XAMPP/MySQL não funcionar no dia e você precisar mostrar
+    telas funcionando.
+  - Se a prova pedir só front-end (HTML, CSS, JS).
+  - Pra treinar a lógica sem se preocupar com banco.
+
+  ATENÇÃO: se a prova exige banco de dados (MySQL), este NÃO
+  substitui o banco. Use a pasta 11 (PHP) ou 15 (Node) nesse caso.
+
+------------------------------------------------------------------
+ COMO RODAR
+------------------------------------------------------------------
+  Dois cliques no index.html. Pronto. Login: admin / 123
+
+------------------------------------------------------------------
+ O QUE TEM
+------------------------------------------------------------------
+  index.html ... as telas (login + sistema)
+  app.js ....... TODA a lógica, comentada
+  estilo.css ... o mesmo CSS das outras pastas
+
+  Funções: login com mensagem de erro, nome do usuário, sair,
+  cadastrar, editar, excluir (com confirmação), buscar, validar,
+  lista em ordem alfabética com Bubble Sort, entrada/saída com
+  data, não deixa sair mais do que tem, alerta de estoque mínimo,
+  histórico.
+
+------------------------------------------------------------------
+ COMO OS DADOS FICAM SALVOS?
+------------------------------------------------------------------
+  No localStorage: uma memória do próprio navegador. Se fechar e
+  abrir de novo, os dados continuam lá (no mesmo navegador).
+    localStorage.setItem("chave", "texto")   salvar
+    localStorage.getItem("chave")            ler
+    JSON.stringify(obj) / JSON.parse(texto)  objeto <-> texto
+
+  O login fica no sessionStorage (some quando fecha o navegador).
+
+------------------------------------------------------------------
+ COISAS DE JAVASCRIPT QUE ESTE EXEMPLO ENSINA
+------------------------------------------------------------------
+  addEventListener("submit", ...)   rodar algo quando envia o form
+  evento.preventDefault()           não deixar a página recarregar
+  lista.find(p => p.id === 3)       achar um item
+  lista.filter(p => p.id !== 3)     tirar um item (excluir)
+  lista.push(obj)                   adicionar item (cadastrar)
+  lista.map(...).join("")           transformar lista em HTML
+  elemento.innerHTML = "..."        mudar o conteúdo da tela
+  elemento.style.display = "none"   esconder

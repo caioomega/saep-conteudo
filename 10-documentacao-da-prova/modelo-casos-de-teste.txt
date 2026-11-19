@@ -1,0 +1,137 @@
+==================================================================
+  CASOS DE TESTE - SISTEMA DE CONTROLE DE ESTOQUE
+  (troque pelo tema da sua prova. Faça pelo menos 1 teste que dá
+   certo e 1 que dá erro para cada tela)
+==================================================================
+
+Formato de cada caso:
+  ID / Requisito / Descrição / Pré-condição / Passos /
+  Dados de entrada / Resultado esperado / Resultado obtido
+
+------------------------------------------------------------------
+CT01 - Login com dados válidos                    (RF01, RF03)
+  Pré-condição: usuário "admin" cadastrado com senha "123".
+  Passos: 1. Abrir a tela de login
+          2. Digitar o login e a senha
+          3. Clicar em "Entrar"
+  Dados: login = admin ; senha = 123
+  Resultado esperado: abrir a tela principal mostrando o nome
+                      "Administrador".
+  Resultado obtido: OK (conforme esperado)
+
+------------------------------------------------------------------
+CT02 - Login com senha incorreta                  (RF02)
+  Passos: 1. Abrir a tela de login
+          2. Digitar login correto e senha errada
+          3. Clicar em "Entrar"
+  Dados: login = admin ; senha = 999
+  Resultado esperado: mensagem "Login ou senha incorretos." e
+                      continuar na tela de login.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT03 - Logout                                      (RF04)
+  Pré-condição: usuário logado.
+  Passos: clicar em "Sair".
+  Resultado esperado: voltar para a tela de login com a mensagem
+                      "Você saiu do sistema."
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT04 - Acesso sem login                            (RF05)
+  Pré-condição: usuário NÃO logado.
+  Passos: digitar no navegador o endereço da página produtos.php.
+  Resultado esperado: ser redirecionado para a tela de login.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT05 - Cadastrar produto válido                    (RF08)
+  Passos: Produtos > Novo produto > preencher > Salvar
+  Dados: nome = Chave de Fenda ; categoria = Ferramenta manual ;
+         marca = Tramontina ; preço = 15.90 ; quantidade = 20 ;
+         estoque mínimo = 5
+  Resultado esperado: mensagem "Produto cadastrado com sucesso!" e
+                      produto aparecendo na lista.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT06 - Cadastrar produto com nome vazio            (RF11)
+  Dados: nome = (vazio) ; demais campos preenchidos
+  Resultado esperado: o sistema não salva e avisa que o nome é
+                      obrigatório.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT07 - Cadastrar produto com quantidade negativa   (RF11)
+  Dados: quantidade = -3
+  Resultado esperado: o sistema não salva e mostra mensagem de
+                      erro sobre a quantidade.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT08 - Buscar produto                              (RF07)
+  Passos: digitar no campo de busca e clicar em "Buscar"
+  Dados: busca = martelo
+  Resultado esperado: listar só os produtos com "martelo" no nome,
+                      categoria ou marca.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT09 - Editar produto                              (RF09)
+  Passos: clicar em "Editar" no produto > alterar o preço > Salvar
+  Dados: preço = 45.00
+  Resultado esperado: mensagem "Produto alterado com sucesso!" e
+                      novo preço na lista.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT10 - Excluir produto                             (RF10)
+  Passos: clicar em "Excluir" > confirmar no "OK"
+  Resultado esperado: pedir confirmação; após confirmar, o produto
+                      some da lista e aparece "excluído com sucesso".
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT11 - Lista em ordem alfabética                   (RF12)
+  Passos: abrir Gestão de Estoque
+  Resultado esperado: produtos listados de A a Z.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT12 - Registrar entrada                           (RF13)
+  Dados: produto = Martelo ; tipo = Entrada ; quantidade = 5 ;
+         data = hoje
+  Resultado esperado: mensagem de sucesso e quantidade do produto
+                      aumentada em 5.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT13 - Registrar saída maior que o estoque         (RF14)
+  Dados: produto com 2 unidades ; tipo = Saída ; quantidade = 10
+  Resultado esperado: o sistema não registra e mostra "Não há
+                      estoque suficiente. Disponível: 2."
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT14 - Alerta de estoque mínimo                    (RF15)
+  Pré-condição: produto com quantidade 8 e mínimo 3.
+  Dados: tipo = Saída ; quantidade = 6  (fica com 2)
+  Resultado esperado: saída registrada e ALERTA informando que o
+                      produto está abaixo do estoque mínimo.
+  Resultado obtido: OK
+
+------------------------------------------------------------------
+CT15 - Histórico                                   (RF16)
+  Passos: abrir Histórico depois do CT12 e CT14
+  Resultado esperado: as movimentações aparecem com data, produto,
+                      tipo, quantidade e nome do usuário.
+  Resultado obtido: OK
+
+==================================================================
+  VERSÃO EM TABELA (se preferir fazer no Word/Excel)
+==================================================================
+| ID   | Funcionalidade | Entrada            | Resultado esperado          | Obtido |
+|------|----------------|--------------------|-----------------------------|--------|
+| CT01 | Login válido   | admin / 123        | Abre tela principal         | OK     |
+| CT02 | Login inválido | admin / 999        | Mensagem de erro            | OK     |
+| ...  | ...            | ...                | ...                         | ...    |

@@ -1,0 +1,111 @@
+==================================================================
+  04 - HTML E CSS
+==================================================================
+
+  HTML = o ESQUELETO da página (o que existe: título, campo, botão,
+         tabela).
+  CSS  = a ROUPA da página (cor, tamanho, posição, espaçamento).
+
+------------------------------------------------------------------
+ ARQUIVOS DESTA PASTA
+------------------------------------------------------------------
+  exemplo-pagina.html ... uma página com TUDO que você vai usar:
+                          menu, mensagens, formulário com todos os
+                          tipos de campo e tabela. Dê dois cliques
+                          nela que abre no navegador (HTML puro
+                          funciona sem XAMPP).
+  estilo.css ............ CSS pronto e comentado. Copie ele pra
+                          pasta do seu projeto e ligue no <head>.
+                          A pasta 06 e a 11 já usam ele.
+
+------------------------------------------------------------------
+ COMO O HTML FUNCIONA
+------------------------------------------------------------------
+  Tudo é feito de TAGS. Uma tag abre e fecha:
+      <p>texto</p>        <- parágrafo
+      <h1>Título</h1>     <- título grande (h1 até h6)
+      <a href="pagina.php">clique</a>   <- link
+      <strong>negrito</strong>
+  Algumas não fecham:  <br> (quebra linha)  <input>  <img src="x.png">
+
+  Tags podem ter ATRIBUTOS (informações extras):
+      <input type="text" name="nome" required>
+             ^atributo    ^atributo   ^atributo
+
+  Estrutura básica de TODA página:
+      <!DOCTYPE html>
+      <html lang="pt-br">
+      <head>
+          <meta charset="UTF-8">
+          <title>Título da aba</title>
+          <link rel="stylesheet" href="estilo.css">
+      </head>
+      <body>
+          ... o que aparece na tela ...
+      </body>
+      </html>
+
+------------------------------------------------------------------
+ FORMULÁRIO - A PARTE MAIS IMPORTANTE PRA PROVA
+------------------------------------------------------------------
+  <form action="arquivo.php" method="post">
+      <input type="text" name="nome" required>
+      <button type="submit">Salvar</button>
+  </form>
+
+  - action ... o arquivo PHP que vai RECEBER os dados.
+               Se deixar vazio (action=""), manda pra própria página.
+  - method ... post = pra salvar dados (não aparece na URL)
+               get  = pra buscar (aparece na URL: ?busca=martelo)
+  - name ..... OBRIGATÓRIO! Sem name, o PHP não recebe o campo.
+               No PHP: $_POST['nome']  (o mesmo texto do name)
+
+  TIPOS DE INPUT:
+      text ....... texto comum
+      number ..... só número (use min="0" pra não deixar negativo,
+                   step="0.01" pra aceitar centavos)
+      email ...... checa se tem @
+      password ... esconde o que digita (****)
+      date ....... mostra um calendário (manda no formato 2026-11-17)
+      hidden ..... escondido (usado pra mandar o id na edição)
+
+  VALIDAÇÃO SEM PROGRAMAR (o navegador faz sozinho):
+      required ........ obrigatório
+      min="0" max="100" número entre 0 e 100
+      maxlength="50" .. no máximo 50 letras
+  Mas ATENÇÃO: a prova pode pedir validação. Faça também no PHP
+  (veja a pasta 06), porque o "required" dá pra burlar.
+
+------------------------------------------------------------------
+ COMO O CSS FUNCIONA
+------------------------------------------------------------------
+  seletor {
+      propriedade: valor;
+  }
+
+  Seletores:
+      p { }            todos os <p>
+      .botao { }       quem tem class="botao"  (ponto = classe)
+      #topo { }        quem tem id="topo"       (# = id)
+      table td { }     os <td> dentro de <table>
+      a:hover { }      link com o mouse em cima
+
+  Propriedades que mais usa:
+      color: red;                 cor do texto
+      background: #eee;           cor de fundo
+      font-size: 16px;            tamanho da letra
+      font-weight: bold;          negrito
+      padding: 10px;              espaço DE DENTRO
+      margin: 10px;               espaço DE FORA
+      border: 1px solid black;    borda
+      border-radius: 6px;         canto arredondado
+      width: 100%;                largura
+      text-align: center;         centralizar texto
+      display: flex;              coloca os filhos lado a lado
+      margin: 0 auto;             centraliza uma caixa (com width)
+
+  Cores: nome (red, blue) ou código (#1f4e79). Pra achar código,
+  no VS Code passe o mouse em cima de uma cor que aparece a paleta.
+
+  Usar uma classe no HTML:
+      <div class="mensagem erro">...</div>   (duas classes juntas)

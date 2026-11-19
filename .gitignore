@@ -1,0 +1,5 @@
+# arquivos gerados automaticamente
+*.class
+*.db
+node_modules/
+__pycache__/

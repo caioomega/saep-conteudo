@@ -1,0 +1,134 @@
+==================================================================
+  01 - LIGANDO O AMBIENTE (XAMPP, NAVEGADOR, EDITOR)
+==================================================================
+
+Antes de programar, você precisa entender 3 coisas:
+
+  1. O NAVEGADOR (Chrome, Edge...) só entende HTML, CSS e JavaScript.
+  2. O PHP não roda sozinho: ele precisa de um "servidor" (o Apache)
+     que lê o arquivo .php, executa e manda o resultado (HTML) pro
+     navegador.
+  3. Os dados (produtos, usuários...) ficam guardados no MySQL
+     (o banco de dados).
+
+O XAMPP é um programa que já traz o Apache + PHP + MySQL juntos.
+Ele já está instalado em:  C:\xampp
+
+------------------------------------------------------------------
+ PASSO 1 - ABRIR O XAMPP
+------------------------------------------------------------------
+ 1. Aperte a tecla Windows, digite "xampp" e abra o
+    "XAMPP Control Panel".
+    (Ou abra o arquivo C:\xampp\xampp-control.exe)
+ 2. Vai aparecer uma janela com uma lista: Apache, MySQL, FileZilla...
+ 3. Clique no botão "Start" da linha do Apache.
+ 4. Clique no botão "Start" da linha do MySQL.
+ 5. Os nomes devem ficar com fundo VERDE. Verde = ligado.
+
+ Se ficar vermelho ou der erro, veja a pasta 13-erros-comuns.
+
+ IMPORTANTE (no SEU computador): existe também um "MySQL Server 8.4"
+ instalado como serviço do Windows, que já usa a porta 3306. Se o
+ MySQL do XAMPP não ligar dizendo que a porta 3306 está em uso, é por
+ causa disso. Duas saídas:
+   a) Usar o MySQL 8.4 que já está ligado (precisa saber a senha do
+      usuário root dele e colocar no conexao.php), ou
+   b) Parar o serviço: tecla Windows -> digite "Serviços" -> procure
+      "MySQL84" (ou parecido) -> botão direito -> Parar. Aí o MySQL do
+      XAMPP liga normal, com usuário root e senha vazia.
+ No computador da prova pode ser diferente. Pergunte pro fiscal qual
+ é o usuário e a senha do MySQL se não funcionar com root e vazio.
+
+------------------------------------------------------------------
+ PASSO 2 - ONDE SALVAR OS ARQUIVOS DO SITE
+------------------------------------------------------------------
+ Todo arquivo .php TEM que ficar dentro da pasta:
+
+     C:\xampp\htdocs\
+
+ Crie uma pasta lá dentro para o seu projeto, por exemplo:
+
+     C:\xampp\htdocs\estoque\
+
+ E coloque os arquivos (.php, .css, .js) dentro dela.
+
+ ATENÇÃO: se você der dois cliques num arquivo .php fora dessa
+ pasta, ele NÃO vai funcionar (vai aparecer o código ou baixar o
+ arquivo). PHP só funciona abrindo pelo endereço localhost.
+
+------------------------------------------------------------------
+ PASSO 3 - VER O SITE NO NAVEGADOR
+------------------------------------------------------------------
+ Abra o navegador e digite na barra de endereço:
+
+     localhost/estoque/
+
+ (troque "estoque" pelo nome da sua pasta dentro do htdocs)
+
+ Se a pasta tiver um arquivo chamado index.php, ele abre sozinho.
+ Para abrir outro arquivo:  localhost/estoque/login.php
+
+ TESTE AGORA: copie o arquivo "teste.php" desta pasta para
+ C:\xampp\htdocs\teste.php e abra  localhost/teste.php
+ Se aparecer "O PHP está funcionando!", está tudo certo.
+
+------------------------------------------------------------------
+ PASSO 4 - PHPMYADMIN (mexer no banco pelo navegador)
+------------------------------------------------------------------
+ Com o MySQL ligado, abra:
+
+     localhost/phpmyadmin
+
+ Aí você consegue:
+   - Ver os bancos na coluna da esquerda
+   - Clicar na aba "SQL" (lá em cima) e colar um script .sql inteiro,
+     depois clicar em "Executar" (ou "Go")
+   - Clicar na aba "Importar" e escolher um arquivo .sql
+   - Ver/editar os dados das tabelas na aba "Visualizar"
+   - Exportar o banco (aba "Exportar") pra entregar o .sql
+
+ COMO RODAR UM ARQUIVO .SQL (o jeito mais fácil):
+   1. Abra o arquivo .sql no Bloco de Notas ou VS Code
+   2. Ctrl + A (seleciona tudo), Ctrl + C (copia)
+   3. No phpMyAdmin, clique na aba "SQL" (sem selecionar banco nenhum)
+   4. Ctrl + V (cola) e clique em "Executar"/"Go"
+
+------------------------------------------------------------------
+ PASSO 5 - ONDE ESCREVER O CÓDIGO
+------------------------------------------------------------------
+ Use o VS Code (Visual Studio Code) se tiver, ou o Cursor (que está
+ instalado no seu PC), ou até o Bloco de Notas.
+
+ No VS Code / Cursor:
+   - Arquivo > Abrir Pasta... > escolha C:\xampp\htdocs\estoque
+   - Aí todos os arquivos aparecem na lateral esquerda.
+
+ ATALHOS QUE SALVAM TEMPO:
+   Ctrl + S ............. salvar (SALVE SEMPRE antes de testar!)
+   Ctrl + Z ............. desfazer
+   Ctrl + Y ............. refazer
+   Ctrl + C / Ctrl + V .. copiar / colar
+   Ctrl + F ............. procurar uma palavra no arquivo
+   Ctrl + H ............. procurar E TROCAR (ótimo pra trocar
+                          "produto" por "livro", por exemplo)
+   Ctrl + Shift + F ..... procurar em TODOS os arquivos da pasta
+   Ctrl + /  ............ comentar/descomentar a linha
+   Alt + seta cima/baixo  move a linha
+   Shift + Alt + seta ... duplica a linha
+   F5 (no navegador) .... recarregar a página
+   Ctrl + F5 ............ recarregar sem cache (quando o CSS não muda)
+
+------------------------------------------------------------------
+ PASSO 6 - MYSQL WORKBENCH (opcional)
+------------------------------------------------------------------
+ Também está instalado o "MySQL Workbench 8.0". Ele serve pra rodar
+ SQL e, PRINCIPALMENTE, pra desenhar o DER automaticamente.
+ Veja a pasta 03-der-modelagem.
+
+------------------------------------------------------------------
+ RESUMO DE 10 SEGUNDOS
+------------------------------------------------------------------
+  XAMPP -> Start no Apache e no MySQL
+  Arquivos -> C:\xampp\htdocs\minhapasta\
+  Navegador -> localhost/minhapasta/
+  Banco -> localhost/phpmyadmin

@@ -1,0 +1,144 @@
+==================================================================
+  SAEP - PROVA PRÁTICA - MATERIAL DE CONSULTA (OFFLINE)
+==================================================================
+
+Oi! Esta pasta tem TUDO que você provavelmente vai precisar na prova
+prática do SAEP (Desenvolvimento de Sistemas), funcionando sem internet.
+
+Tudo aqui é feito com:
+  - XAMPP  (programa que já está instalado em C:\xampp)
+  - PHP    (a linguagem que roda no servidor)
+  - MySQL  (o banco de dados, onde as informações ficam guardadas)
+  - HTML, CSS e JavaScript (o que aparece na tela)
+
+------------------------------------------------------------------
+ COMO ESTA PASTA ESTÁ ORGANIZADA (abra na ordem se tiver tempo)
+------------------------------------------------------------------
+
+ 00-LEIA-PRIMEIRO.txt ........ este arquivo (o mapa de tudo)
+ COLA-RAPIDA.txt ............. os códigos que você mais vai usar,
+                               tudo numa página só pra copiar e colar
+
+ 01-ligando-o-ambiente ....... como abrir o XAMPP, onde salvar os
+                               arquivos, como ver o site no navegador
+ 02-sql-banco-de-dados ....... comandos SQL: criar banco, tabela,
+                               inserir, buscar, alterar, apagar, JOIN
+ 03-der-modelagem ............ o que é DER (desenho do banco) e como
+                               fazer no MySQL Workbench
+ 04-html-css ................. formulário, tabela e um CSS pronto
+ 05-php-basico ............... variáveis, if, repetição, funções,
+                               receber dados de formulário
+ 06-crud-simples ............. CRUD de uma tabela só, bem explicado
+                               (Cadastrar, Listar, Editar, Excluir)
+ 07-login-e-sessao ........... tela de login, proteger páginas, sair
+ 08-javascript ............... confirmar exclusão, validar formulário,
+                               mostrar alerta
+ 09-ordenacao-algoritmos ..... Bubble Sort e Insertion Sort (a prova
+                               costuma pedir "ordenar usando algoritmo")
+ 10-documentacao-da-prova .... modelos prontos de: requisitos
+                               funcionais, casos de teste, lista de
+                               infraestrutura, descrição do DER
+ 11-projeto-completo-estoque . SISTEMA COMPLETO no estilo da prova:
+                               login + cadastro de produtos + gestão de
+                               estoque com alerta + histórico
+                               >>> ESTE É O MAIS IMPORTANTE <<<
+ 12-meu-projeto-original ..... o seu CRUD que já estava nesta pasta,
+                               do jeito que estava
+ 13-erros-comuns ............. "deu erro X" -> "faça Y"
+
+ --- SE A PROVA NÃO FOR EM PHP ---
+ 14-crud-so-html-js .......... o sistema inteiro só com HTML + CSS +
+                               JavaScript (dois cliques e funciona,
+                               sem XAMPP). Ótimo PLANO B.
+ 15-nodejs ................... JavaScript no servidor (Node), API REST
+                               + banco SQLite, sem instalar nada
+ 16-java ..................... Java: CRUD no console, com janela
+                               (Swing) e com MySQL (JDBC)
+ 17-python ................... Python: CRUD com SQLite (Python NÃO
+                               está instalado no seu PC, leia lá)
+
+ --- TEORIA E EXTRAS ---
+ 18-poo-orientacao-objetos ... classe, objeto, herança, polimorfismo
+                               + CRUD com PDO (PHP orientado a objetos)
+ 19-teoria-uml-scrum ......... UML (casos de uso, classes), Scrum,
+                               testes, normalização, segurança, LGPD
+ 20-git-github ............... comandos do git
+
+Cada pasta tem um arquivo EXPLICACAO.txt. Leia ele primeiro, depois
+abra os códigos. Os códigos também têm comentários (as linhas que
+começam com // ou que estão entre /* e */ ou <!-- e -->) explicando
+cada pedaço.
+
+------------------------------------------------------------------
+ QUAL PASTA USAR? (decida em 1 minuto)
+------------------------------------------------------------------
+ A prova pede...
+   site/sistema web com banco MySQL ......... pasta 11 (PHP)
+   "orientação a objetos" em PHP ............ pasta 11 + 18
+   JavaScript / Node / API .................. pasta 15 (e 14)
+   Java (console ou janela) ................. pasta 16
+   Python ................................... pasta 17
+   só telas (HTML/CSS/JS), sem banco ........ pasta 14
+   linguagem livre .......................... pasta 11 (PHP): é a
+                                              mais completa e testada
+   XAMPP/MySQL não funciona no PC ........... pasta 14 pra mostrar
+                                              as telas + avise o fiscal
+ Em TODAS: DER (03), script SQL (02/11) e documentos (10).
+
+ O QUE TEM NO SEU PC (conferido em 19/11/2026):
+   XAMPP com PHP 8.0 ............... SIM  (C:\xampp)
+   MySQL Server 8.4 (separado) ..... SIM  (tem senha; ver pasta 13)
+   MySQL Workbench 8.0 ............. SIM
+   Java 21 (do Android Studio) ..... SIM  (os rodar.bat já acham)
+   Node.js 24 (portátil) ........... SIM  (os rodar.bat já acham)
+   Python .......................... NÃO
+   Git ............................. SIM
+
+------------------------------------------------------------------
+ COMO A PROVA PRÁTICA COSTUMA SER
+------------------------------------------------------------------
+A prova dá uma "situação-problema" (ex.: uma empresa precisa de um
+sistema pra controlar o estoque) e pede ENTREGAS. As mais comuns:
+
+  1. DER (desenho do banco de dados)  ............ ver pasta 03
+  2. Script SQL que cria o banco e coloca
+     pelo menos 3 registros em cada tabela ....... ver pasta 02 e 11
+  3. Requisitos funcionais ....................... ver pasta 10
+  4. Casos de teste .............................. ver pasta 10
+  5. Lista de infraestrutura (SO, programas,
+     linguagem, banco que você usou) ............. ver pasta 10
+  6. As telas do sistema funcionando:
+       - Login (e mostrar o nome de quem entrou + botão sair)
+       - Tela principal com os menus
+       - Cadastro de produto (listar, buscar, inserir, editar,
+         excluir, com validação)
+       - Gestão de estoque (lista em ordem alfabética usando um
+         ALGORITMO de ordenação, entrada/saída, data, e ALERTA
+         quando o estoque fica abaixo do mínimo)
+     ............................................ ver pasta 11
+
+LEIA COM ATENÇÃO O QUE A SUA PROVA PEDE. O tema pode mudar (pode ser
+biblioteca, oficina, escola, hospital...), mas a ESTRUTURA é quase
+sempre a mesma. Aí é só trocar "produto" pela coisa da sua prova.
+
+------------------------------------------------------------------
+ PLANO PARA O DIA DA PROVA (passo a passo)
+------------------------------------------------------------------
+ [ ] 1. Leia a prova inteira antes de começar. Anote as tabelas e
+        campos que ela pede.
+ [ ] 2. Ligue o Apache e o MySQL no XAMPP (pasta 01).
+ [ ] 3. Faça o DER (pasta 03). Pode ser no papel se deixarem, ou no
+        MySQL Workbench.
+ [ ] 4. Copie o banco.sql da pasta 11, troque nomes de tabelas e
+        campos pelo que a prova pede, e rode no phpMyAdmin.
+ [ ] 5. Copie a pasta 11 inteira pra C:\xampp\htdocs\ com o nome do
+        seu projeto e vá adaptando tela por tela.
+ [ ] 6. Teste tudo no navegador: login, cadastrar, editar, excluir,
+        buscar, entrada, saída, alerta.
+ [ ] 7. Preencha os modelos da pasta 10 (requisitos, casos de teste,
+        infraestrutura).
+ [ ] 8. Entregue do jeito que pedirem (geralmente uma pasta com seu
+        nome contendo tudo). Confira que o .sql está junto!
+
+Dica de ouro: faça funcionar primeiro, deixe bonito depois.
+Um sistema feio que funciona vale MUITO mais que um bonito quebrado.

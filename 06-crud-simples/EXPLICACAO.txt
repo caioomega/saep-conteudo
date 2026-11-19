@@ -1,0 +1,94 @@
+==================================================================
+  06 - CRUD SIMPLES (uma tabela só)
+==================================================================
+
+O QUE É CRUD?
+  São as 4 coisas que todo sistema faz com os dados:
+    C - Create (Criar) ....... INSERT ... cadastrar.php
+    R - Read   (Ler) ......... SELECT ... index.php (lista + busca)
+    U - Update (Atualizar) ... UPDATE ... editar.php
+    D - Delete (Apagar) ...... DELETE ... excluir.php
+
+  Este exemplo faz CRUD de CLIENTES. Pra virar CRUD de qualquer
+  outra coisa (livros, produtos, alunos), é só trocar os nomes.
+
+------------------------------------------------------------------
+ COMO FAZER FUNCIONAR (passo a passo)
+------------------------------------------------------------------
+  1. Ligue Apache e MySQL no XAMPP.
+  2. Abra localhost/phpmyadmin, aba SQL, cole o conteúdo do
+     banco.sql e clique em Executar. (Cria o banco crud_simples.)
+  3. Copie a pasta 06-crud-simples inteira pra C:\xampp\htdocs\
+  4. Abra no navegador:  localhost/06-crud-simples/
+  5. Teste: cadastrar, buscar, editar, excluir.
+
+  Se aparecer "Erro ao conectar no banco": abra conexao.php e
+  confira usuário/senha/nome do banco. Veja a pasta 13.
+
+------------------------------------------------------------------
+ ARQUIVOS E O QUE CADA UM FAZ
+------------------------------------------------------------------
+  banco.sql ...... cria o banco e a tabela com 3 clientes
+  conexao.php .... conecta no banco. TODAS as páginas incluem ele.
+                   É o ÚNICO lugar onde fica usuário/senha.
+  estilo.css ..... aparência (o mesmo da pasta 04)
+  index.php ...... lista todos + campo de busca + botões
+  cadastrar.php .. formulário + INSERT
+  editar.php ..... busca o cliente pelo id, preenche o formulário,
+                   e faz UPDATE ao salvar
+  excluir.php .... DELETE pelo id e volta pra lista
+
+------------------------------------------------------------------
+ O CAMINHO DOS DADOS (entenda isso e você entende tudo)
+------------------------------------------------------------------
+  CADASTRAR:
+    Pessoa preenche o form (HTML)
+      -> clica em Salvar
+      -> o navegador manda os dados (POST) pro cadastrar.php
+      -> o PHP pega com $_POST['nome']
+      -> valida (está vazio? e-mail válido?)
+      -> monta o SQL INSERT e roda com mysqli_query
+      -> manda a pessoa de volta pra lista: header("Location: ...")
+
+  EDITAR:
+    Na lista, o link é  editar.php?id=3   (o id vai na URL)
+      -> o editar.php pega $_GET['id'], faz SELECT ... WHERE id = 3
+      -> coloca os valores dentro dos campos (value="...")
+      -> o id vai num <input type="hidden"> junto com o form
+      -> ao salvar, faz UPDATE ... WHERE id = 3
+
+  EXCLUIR:
+    Link  excluir.php?id=3
+      -> confirm() do JavaScript pergunta "tem certeza?"
+      -> PHP faz DELETE ... WHERE id = 3 e volta pra lista
+
+------------------------------------------------------------------
+ COMO ADAPTAR PRA OUTRA TABELA (ex.: LIVROS)
+------------------------------------------------------------------
+  1. No banco.sql: troque a tabela clientes por livros, com as
+     colunas que a prova pede (titulo, autor, ano...).
+  2. No conexao.php: troque o nome do banco.
+  3. Em cada .php, use Ctrl + H (procurar e trocar):
+       clientes -> livros
+       cliente  -> livro
+  4. Troque os campos: onde tem nome/email/telefone/cidade, coloque
+     os seus (titulo/autor/ano). Lembre de trocar em TODOS os
+     lugares: no $_POST, no SQL, no <input name="...">, no echo.
+  5. Campo número: no SQL vai SEM aspas e use (int) ou (float):
+       $ano = (int)$_POST['ano'];
+       $sql = "INSERT INTO livros (titulo, ano) VALUES ('$t', $ano)";
+  6. Teste uma tela por vez.
+
+------------------------------------------------------------------
+ FUNÇÕES DO MYSQLI QUE VOCÊ USA (decore estas)
+------------------------------------------------------------------
+  mysqli_connect(servidor, usuario, senha, banco)  conecta
+  mysqli_query($conexao, $sql)       roda um SQL
+  mysqli_fetch_assoc($resultado)     pega UMA linha como array
+  mysqli_num_rows($resultado)        quantas linhas voltaram
+  mysqli_real_escape_string($conexao, $texto)   protege o texto
+  mysqli_error($conexao)             mostra o erro do último SQL
+  mysqli_insert_id($conexao)         id do último INSERT
+
+  header("Location: pagina.php"); exit;    redireciona
+  htmlspecialchars($texto)                 mostra texto com segurança

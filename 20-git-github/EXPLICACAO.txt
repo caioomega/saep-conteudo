@@ -1,0 +1,65 @@
+==================================================================
+  20 - GIT E GITHUB
+==================================================================
+
+  GIT ..... programa que guarda o HISTÓRICO do seu código (cada
+            "foto" do projeto é um commit). Funciona sem internet.
+  GITHUB .. site onde você guarda seus repositórios na nuvem
+            (precisa de internet pra enviar).
+
+  Esta pasta inteira (saep-conteudo) está salva no seu GitHub.
+
+------------------------------------------------------------------
+ COMANDOS DO DIA A DIA (no terminal, dentro da pasta do projeto)
+------------------------------------------------------------------
+  git init                       transforma a pasta em repositório
+  git status                     o que mudou?
+  git add .                      prepara TODOS os arquivos mudados
+  git add arquivo.php            prepara só um arquivo
+  git commit -m "mensagem"       tira a "foto" (salva no histórico)
+  git log --oneline              lista os commits
+  git diff                       mostra o que mudou nos arquivos
+
+  git remote add origin URL      liga a pasta a um repositório do
+                                 GitHub
+  git push                       ENVIA os commits pro GitHub
+  git pull                       PUXA as novidades do GitHub
+  git clone URL                  baixa um repositório inteiro
+
+  git checkout -- arquivo.php    desfaz as mudanças não salvas
+                                 de um arquivo (CUIDADO, perde!)
+  git branch nome                cria um "galho" (versão paralela)
+  git switch nome                vai pro galho
+
+------------------------------------------------------------------
+ PRIMEIRA VEZ NUM PC NOVO
+------------------------------------------------------------------
+  git config --global user.name "Seu Nome"
+  git config --global user.email "seu@email.com"
+
+------------------------------------------------------------------
+ ATUALIZAR ESTE MATERIAL NO GITHUB DEPOIS DE MUDAR ALGO
+------------------------------------------------------------------
+  (no terminal, dentro da pasta saep-conteudo)
+  git add .
+  git commit -m "o que eu mudei"
+  git push
+
+------------------------------------------------------------------
+ BAIXAR ESTE MATERIAL EM OUTRO PC (com internet)
+------------------------------------------------------------------
+  Pelo site: abra o repositório no GitHub > botão verde "Code" >
+  "Download ZIP" > extraia.
+  Ou:  git clone https://github.com/SEU-USUARIO/saep-conteudo.git
+
+------------------------------------------------------------------
+ TERMOS
+------------------------------------------------------------------
+  Repositório (repo) .. a pasta do projeto com histórico
+  Commit .............. uma versão salva, com mensagem
+  Branch .............. linha paralela de desenvolvimento
+  Merge ............... juntar uma branch na outra
+  Pull Request (PR) ... pedido pra juntar sua branch no GitHub
+  Conflito ............ duas pessoas mudaram a mesma linha;
+                        você escolhe qual fica
+  .gitignore .......... arquivo com o que o git deve IGNORAR

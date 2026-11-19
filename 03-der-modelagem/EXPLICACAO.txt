@@ -1,0 +1,107 @@
+==================================================================
+  03 - DER (DIAGRAMA ENTIDADE-RELACIONAMENTO)
+==================================================================
+
+O QUE É?
+  É o DESENHO do banco de dados. Mostra quais tabelas existem, quais
+  colunas cada uma tem e como elas se ligam. A prova quase sempre
+  pede o DER como uma das entregas (geralmente como imagem/PDF).
+
+  Pense assim: o DER é a "planta da casa"; o script SQL é "construir
+  a casa".
+
+------------------------------------------------------------------
+ AS PEÇAS DO DER
+------------------------------------------------------------------
+  ENTIDADE ........ vira uma TABELA. É um "substantivo" do problema:
+                    Produto, Usuário, Cliente, Livro, Movimentação.
+                    Desenha como um retângulo.
+
+  ATRIBUTO ........ vira uma COLUNA. É uma característica da
+                    entidade: nome, preço, quantidade.
+
+  CHAVE PRIMÁRIA .. (PK) o atributo que identifica cada registro
+                    (o id). Costuma aparecer com uma chavinha ou
+                    sublinhado.
+
+  CHAVE ESTRANGEIRA (FK) a coluna que liga numa outra tabela
+                    (ex.: produto_id dentro de movimentacoes).
+
+  RELACIONAMENTO .. a linha que liga duas entidades. Um "verbo":
+                    Usuário REALIZA Movimentação,
+                    Produto POSSUI Movimentação.
+
+  CARDINALIDADE ... quantos de um lado se ligam a quantos do outro:
+     1:1  (um pra um) ...... uma pessoa tem um CPF
+     1:N  (um pra muitos) .. um produto tem MUITAS movimentações,
+                             mas cada movimentação é de UM produto
+                             >>> É O MAIS COMUM NA PROVA <<<
+     N:N  (muitos pra muitos) um aluno faz vários cursos e um curso
+                             tem vários alunos. No banco, N:N vira
+                             uma TERCEIRA tabela no meio (ex.:
+                             matriculas com aluno_id e curso_id).
+
+  REGRA DE OURO DO 1:N:
+     A chave estrangeira fica SEMPRE do lado do "N" (do "muitos").
+     Produto (1) ---- (N) Movimentação
+     -> a tabela movimentacoes ganha a coluna produto_id.
+
+------------------------------------------------------------------
+ COMO DESCOBRIR AS ENTIDADES LENDO A PROVA
+------------------------------------------------------------------
+  1. Leia o texto e grife os SUBSTANTIVOS importantes:
+     "O funcionário faz login e registra a entrada e saída de
+      produtos no estoque."
+     -> funcionário (usuarios), produtos, entrada/saída
+        (movimentacoes).
+  2. Pra cada um, liste as características que a prova cita
+     (nome, marca, quantidade, data...). Esses são os atributos.
+  3. Pergunte: "um X tem quantos Y?" pra achar a cardinalidade.
+
+------------------------------------------------------------------
+ EXEMPLO PRONTO (o do projeto da pasta 11)
+------------------------------------------------------------------
+  Veja o arquivo der-exemplo-estoque.txt nesta pasta.
+
+------------------------------------------------------------------
+ COMO GERAR O DER AUTOMÁTICO NO MYSQL WORKBENCH (o jeito mais rápido)
+------------------------------------------------------------------
+  Primeiro crie o banco rodando o seu .sql (no phpMyAdmin ou no
+  Workbench). Depois:
+
+  1. Abra o "MySQL Workbench".
+  2. Na tela inicial, clique na conexão (ex.: "Local instance") e
+     digite a senha se pedir.
+     - Se não tiver conexão: clique no "+" ao lado de
+       "MySQL Connections", Hostname 127.0.0.1, Port 3306,
+       Username root, clique em OK.
+  3. No menu lá em cima: Database > Reverse Engineer...
+     (Engenharia Reversa)
+  4. Next > Next (digite a senha se pedir) > marque o SEU banco
+     (ex.: saep_estoque) > Next > Next > Execute > Next > Finish.
+  5. Pronto! Aparece o diagrama com as tabelas e as linhas ligando.
+     Arraste as caixas pra deixar organizado.
+  6. Pra salvar como imagem: File > Export > Export as PNG...
+     (ou Export as PDF). Salve na pasta da entrega.
+
+  OBS.: o Workbench conversa com o MySQL que estiver ligado na porta
+  3306 (no seu PC pode ser o MySQL 8.4 ou o do XAMPP).
+
+------------------------------------------------------------------
+ PLANO B: DER SEM WORKBENCH
+------------------------------------------------------------------
+  - No phpMyAdmin: clique no banco > aba "Mais" (More) > "Designer".
+    Ele mostra as tabelas e as ligações. Tire um print (tecla
+    Windows + Shift + S) e salve.
+  - No papel, se a prova permitir: desenhe os retângulos como no
+    exemplo do arquivo der-exemplo-estoque.txt.
+  - No Word/PowerPoint: Inserir > Formas (retângulos e linhas).
+
+------------------------------------------------------------------
+ MODELO CONCEITUAL x LÓGICO x FÍSICO (pode cair a pergunta)
+------------------------------------------------------------------
+  Conceitual ... o desenho "de ideia": entidades, atributos e
+                 relacionamentos, sem tipo de dado. (brModelo)
+  Lógico ....... já com tabelas, colunas, PK, FK e tipos.
+                 (é o que o Workbench gera)
+  Físico ....... o script SQL de verdade (CREATE TABLE...).

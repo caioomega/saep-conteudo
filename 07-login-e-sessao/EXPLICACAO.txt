@@ -1,0 +1,77 @@
+==================================================================
+  07 - LOGIN E SESSÃO
+==================================================================
+
+O QUE A PROVA COSTUMA PEDIR:
+  - Tela de login (usuário e senha)
+  - Se errar: mostrar mensagem de erro e voltar pro login
+  - Se acertar: ir pra tela principal
+  - Mostrar o NOME de quem está logado na tela principal
+  - Botão de SAIR (logout) que volta pro login
+  - Não deixar entrar nas páginas sem fazer login
+
+------------------------------------------------------------------
+ COMO FAZER FUNCIONAR
+------------------------------------------------------------------
+  1. Rode o banco.sql no phpMyAdmin (cria o banco login_teste).
+  2. Copie a pasta 07-login-e-sessao pra C:\xampp\htdocs\
+  3. Abra  localhost/07-login-e-sessao/login.php
+  4. Entre com:  admin  /  123
+
+------------------------------------------------------------------
+ ARQUIVOS
+------------------------------------------------------------------
+  banco.sql ............ tabela usuarios com 3 usuários (senha 123)
+  conexao.php .......... conexão com o banco
+  login.php ............ formulário + confere login e senha
+  verifica_login.php ... protege as páginas (inclua no topo delas)
+  painel.php ........... exemplo de página protegida, mostra o nome
+  logout.php ........... sair
+  gerar-hash.php ....... gera a senha criptografada pra pôr no .sql
+
+------------------------------------------------------------------
+ O QUE É SESSÃO?
+------------------------------------------------------------------
+  Cada página PHP "esquece" tudo quando termina. Então como o
+  sistema lembra que você fez login?
+  -> com a SESSÃO. É uma "gaveta" no servidor, uma pra cada
+     navegador, onde você guarda coisas:
+
+       session_start();                    // abre a gaveta
+       $_SESSION['usuario_nome'] = "Maria"; // guarda
+       echo $_SESSION['usuario_nome'];      // lê (em qualquer página)
+       session_destroy();                   // joga tudo fora (logout)
+
+  REGRA: session_start() tem que vir ANTES de qualquer HTML ou echo.
+  Toda página que usa $_SESSION precisa do session_start()
+  (o verifica_login.php já faz isso).
+
+------------------------------------------------------------------
+ POR QUE A SENHA FICA "ESQUISITA" NO BANCO?
+------------------------------------------------------------------
+  Por segurança, a senha é guardada CRIPTOGRAFADA (hash).
+    password_hash("123", PASSWORD_DEFAULT)   -> cria o hash
+    password_verify("123", $hash_do_banco)   -> confere (true/false)
+
+  Pra criar usuário no .sql, gere o hash no gerar-hash.php e cole.
+
+  PLANO B (se tiver com pressa e a prova não exigir criptografia):
+  guardar a senha normal e comparar direto:
+     INSERT INTO usuarios (nome, login, senha) VALUES ('Admin','admin','123');
+     ...
+     if ($usuario && $senha == $usuario['senha']) { ... }
+  Funciona, mas é INSEGURO. Se der tempo, use o password_hash.
+  Se usar o plano B, troque também no login.php a linha do
+  password_verify.
+
+------------------------------------------------------------------
+ PROTEGER UMA PÁGINA = 1 LINHA
+------------------------------------------------------------------
+  Na primeira linha da página:
+     <?php include "verifica_login.php"; ?>
+
+  Mostrar o nome:
+     Olá, <?php echo $_SESSION['usuario_nome']; ?>
+
+  Botão sair:
+     <a href="logout.php">Sair</a>

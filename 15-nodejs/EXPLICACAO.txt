@@ -1,0 +1,77 @@
+==================================================================
+  15 - NODE.JS (JavaScript no servidor)
+==================================================================
+
+O QUE É?
+  Node.js deixa você usar JavaScript no SERVIDOR (o papel que o
+  PHP faz na pasta 11). O navegador pede, o Node responde.
+
+  NO SEU PC: o Node 24 está em
+    %LOCALAPPDATA%\Programs\node-portable\node.exe
+  Ele NÃO está no PATH (digitar só "node" no terminal não funciona).
+  Por isso tem o rodar.bat, que já acha ele sozinho.
+
+------------------------------------------------------------------
+ COMO RODAR ESTE EXEMPLO (CRUD de produtos)
+------------------------------------------------------------------
+  Jeito fácil: dois cliques no rodar.bat
+    -> abre uma janela preta (o servidor) e o navegador em
+       http://localhost:3000
+    -> pra parar, feche a janela preta.
+
+  Jeito pelo terminal (PowerShell, dentro desta pasta):
+    & "$env:LOCALAPPDATA\Programs\node-portable\node.exe" servidor.js
+
+  Este exemplo NÃO precisa de "npm install" nem internet: usa o
+  banco SQLite que já vem dentro do Node (cria o arquivo
+  estoque.db nesta pasta). Pra zerar os dados, apague o estoque.db.
+
+------------------------------------------------------------------
+ ARQUIVOS
+------------------------------------------------------------------
+  servidor.js .. o servidor + API (listar, buscar, cadastrar,
+                 editar, excluir) com validação e SQL seguro (?)
+  index.html ... a tela, que conversa com a API usando fetch()
+  rodar.bat .... liga tudo com dois cliques
+
+------------------------------------------------------------------
+ CONCEITOS (caem em pergunta!)
+------------------------------------------------------------------
+  API ........ endereços que o front-end chama pra pegar/mandar
+               dados, normalmente em JSON.
+  REST ....... jeito padrão de organizar a API usando os MÉTODOS
+               HTTP:
+                  GET    = buscar/listar      (Read)
+                  POST   = criar              (Create)
+                  PUT    = alterar            (Update)
+                  DELETE = apagar             (Delete)
+  JSON ....... formato de texto pros dados:
+               {"nome": "Martelo", "quantidade": 8}
+  Status HTTP  200 OK | 201 Criado | 400 dado inválido |
+               401 não logado | 404 não encontrado | 500 erro
+               no servidor
+  fetch() .... função do navegador pra chamar a API
+  async/await  "espera a resposta chegar antes de continuar"
+
+------------------------------------------------------------------
+ E O EXPRESS + MYSQL?
+------------------------------------------------------------------
+  O jeito "profissional" é usar o Express e o pacote mysql2:
+     npm init -y
+     npm install express mysql2
+  MAS isso BAIXA da internet. No dia da prova, sem internet, NÃO
+  funciona (a não ser que você instale ANTES, com internet, e leve a
+  pasta node_modules junto). Por isso este exemplo usa só o que já
+  vem no Node.
+
+  Se quiser preparar antes (COM internet), numa pasta nova:
+     & "$env:LOCALAPPDATA\Programs\node-portable\npm.cmd" init -y
+     & "$env:LOCALAPPDATA\Programs\node-portable\npm.cmd" install express mysql2
+  Aí a pasta node_modules fica salva e funciona offline depois.
+
+  Exemplo de Express (só pra conhecer):
+     const express = require("express");
+     const app = express();
+     app.use(express.json());
+     app.get("/api/produtos", (req, res) => res.json([...]));
+     app.listen(3000);

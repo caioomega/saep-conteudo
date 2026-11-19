@@ -1,0 +1,76 @@
+==================================================================
+  17 - PYTHON
+==================================================================
+
+  !!! NO SEU PC O PYTHON NÃO ESTÁ INSTALADO !!!
+  (digitar "python" abre a Microsoft Store). Se a prova for em
+  Python e no SEU PC, instale ANTES, com internet:
+     python.org > Downloads > Windows > baixe e rode o instalador
+     MARQUE a caixinha "Add python.exe to PATH" na primeira tela!
+  Se for no PC da escola, provavelmente já tem.
+
+------------------------------------------------------------------
+ ARQUIVO
+------------------------------------------------------------------
+  crud_console.py ... CRUD de produtos no terminal com banco
+                      SQLite (vem junto com o Python, não precisa
+                      instalar nada): login, listar (Bubble Sort),
+                      cadastrar, editar, excluir, entrada/saída,
+                      alerta.
+
+  Rodar (terminal, nesta pasta):   python crud_console.py
+  Ou no IDLE (vem com o Python): File > Open > F5 pra rodar.
+
+------------------------------------------------------------------
+ PYTHON EM 2 MINUTOS
+------------------------------------------------------------------
+  - NÃO tem ; nem { }. Os blocos são feitos pela INDENTAÇÃO
+    (os espaços no começo da linha). Use sempre 4 espaços.
+        if idade >= 18:
+            print("maior")
+        else:
+            print("menor")
+  - Variável sem tipo e sem $:   nome = "Ana"   idade = 17
+  - Mostrar:   print("Olá", nome)     print(f"Olá {nome}")
+  - Ler:       nome = input("Nome: ")
+  - Número:    int("10")   float("9.9")
+  - Lista:     lista = [1, 2, 3]   lista.append(4)   len(lista)
+  - Dicionário (igual array associativo do PHP):
+               p = {"nome": "Martelo", "qtd": 8}   p["nome"]
+  - Repetição: for i in range(5):     for p in lista:     while x > 0:
+  - Função:    def somar(a, b):
+                   return a + b
+  - E / OU / NÃO:  and  or  not
+  - Verdadeiro/falso: True / False (maiúscula!)  Vazio: None
+
+------------------------------------------------------------------
+ TELA COM JANELA (tkinter - vem junto com o Python)
+------------------------------------------------------------------
+  import tkinter as tk
+  from tkinter import messagebox
+  janela = tk.Tk()
+  janela.title("Cadastro")
+  tk.Label(janela, text="Nome:").pack()
+  campo = tk.Entry(janela); campo.pack()
+  def salvar():
+      if campo.get().strip() == "":
+          messagebox.showerror("Erro", "Preencha o nome")
+      else:
+          messagebox.showinfo("OK", "Salvo: " + campo.get())
+  tk.Button(janela, text="Salvar", command=salvar).pack()
+  janela.mainloop()
+
+------------------------------------------------------------------
+ PYTHON + MYSQL / SITE (Flask)
+------------------------------------------------------------------
+  Precisam de "pip install mysql-connector-python flask", que
+  BAIXA da internet. Sem internet no dia, não dá. Se for usar,
+  instale ANTES. Exemplo MySQL:
+     import mysql.connector
+     con = mysql.connector.connect(host="localhost", user="root",
+                                   password="", database="saep_estoque")
+     cur = con.cursor()
+     cur.execute("SELECT * FROM produtos")
+     for linha in cur.fetchall(): print(linha)
+  (com MySQL o marcador é %s em vez de ?, e precisa con.commit()
+   depois de INSERT/UPDATE/DELETE)

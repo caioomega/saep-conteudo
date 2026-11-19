@@ -1,0 +1,74 @@
+==================================================================
+  05 - PHP BÁSICO
+==================================================================
+
+O QUE É PHP?
+  É a linguagem que roda NO SERVIDOR (no XAMPP). Ela:
+    1. Recebe o que a pessoa digitou no formulário
+    2. Conversa com o banco de dados (salva, busca, altera, apaga)
+    3. Monta o HTML e manda pro navegador
+
+  O navegador NUNCA vê o código PHP, só o resultado (o HTML).
+
+------------------------------------------------------------------
+ COMO TESTAR OS ARQUIVOS DESTA PASTA
+------------------------------------------------------------------
+  1. Ligue o Apache no XAMPP.
+  2. Copie a pasta 05-php-basico inteira para C:\xampp\htdocs\
+  3. No navegador:  localhost/05-php-basico/01-variaveis-e-echo.php
+     (troque o nome do arquivo pra ver os outros)
+  4. Abra o arquivo no editor ao lado e compare o código com o que
+     apareceu na tela.
+
+------------------------------------------------------------------
+ ARQUIVOS (na ordem)
+------------------------------------------------------------------
+  01-variaveis-e-echo.php ..... variáveis, mostrar na tela, contas,
+                                formatar dinheiro e data
+  02-if-e-else.php ............ condições, comparações, validação
+  03-repeticao.php ............ for, while, foreach
+  04-arrays.php ............... listas (é assim que o banco devolve
+                                os dados)
+  05-funcoes.php .............. criar suas próprias funções
+  06-formulario-get-post.php .. receber dados do formulário e
+                                validar (MUITO IMPORTANTE)
+  07-include.php .............. reaproveitar arquivo (menu,
+                                conexão) em várias páginas
+
+------------------------------------------------------------------
+ REGRAS QUE SE VOCÊ ESQUECER DÁ ERRO
+------------------------------------------------------------------
+  1. Código PHP fica entre  <?php   e   ?>
+  2. Toda linha termina com ;
+  3. Variável começa com $   ($nome, $preco)
+  4. Juntar texto é com PONTO:  "Olá " . $nome
+  5. Todo { que abre tem um } que fecha
+  6. Texto entre aspas: "texto" ou 'texto'
+  7. PHP diferencia maiúscula de minúscula nas variáveis:
+     $Nome e $nome são variáveis DIFERENTES
+  8. O arquivo tem que terminar em .php e estar no htdocs
+
+------------------------------------------------------------------
+ CONECTAR NO BANCO (o resumo, detalhes na pasta 06)
+------------------------------------------------------------------
+  $conexao = mysqli_connect("localhost", "root", "", "nome_do_banco");
+
+  // rodar um comando SQL:
+  $resultado = mysqli_query($conexao, "SELECT * FROM produtos");
+
+  // pegar as linhas uma por uma:
+  while ($linha = mysqli_fetch_assoc($resultado)) {
+      echo $linha['nome'];
+  }
+
+------------------------------------------------------------------
+ COMO DESCOBRIR O ERRO
+------------------------------------------------------------------
+  - Leia a mensagem! Ela diz o arquivo e a LINHA do erro:
+      "Parse error: syntax error ... in C:\xampp\htdocs\x\a.php on line 12"
+    -> vá na linha 12 (ou na de cima, geralmente falta ; ou } )
+  - Use  var_dump($variavel);  ou  print_r($array);  pra ver o que
+    tem dentro de uma variável.
+  - Use  echo $sql;  pra ver o SQL que o PHP montou e cole ele no
+    phpMyAdmin pra testar.
+  - Mais na pasta 13-erros-comuns.

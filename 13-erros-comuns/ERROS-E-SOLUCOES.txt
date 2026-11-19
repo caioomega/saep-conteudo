@@ -1,0 +1,161 @@
+==================================================================
+  13 - DEU ERRO? PROCURE AQUI (Ctrl + F e digite parte do erro)
+==================================================================
+
+------------------------------------------------------------------
+ XAMPP / SERVIDOR
+------------------------------------------------------------------
+"Port 80 in use" / Apache não fica verde
+  Outro programa usa a porta 80 (Skype, IIS, outro servidor).
+  -> Feche o Skype/Teams. Ou no XAMPP: botão "Config" do Apache >
+     httpd.conf > troque "Listen 80" por "Listen 8080" e salve.
+     Aí acesse  localhost:8080/suapasta
+
+"Port 3306 in use" / MySQL não liga / "MySQL shutdown unexpectedly"
+  Já tem outro MySQL ligado (NO SEU PC tem o MySQL Server 8.4).
+  -> Tecla Windows > "Serviços" > procure MySQL84 (ou MySQL80) >
+     botão direito > Parar. Depois Start no XAMPP de novo.
+  -> OU use o MySQL que já está ligado: aí no conexao.php coloque a
+     senha do root dele.
+  Se o MySQL do XAMPP der "shutdown unexpectedly" mesmo sem
+  conflito, peça ajuda ao fiscal (geralmente é arquivo corrompido).
+
+"Not Found - The requested URL was not found"
+  O endereço está errado ou o arquivo não está no htdocs.
+  -> Confira se a pasta está em C:\xampp\htdocs\NOME
+  -> Confira o nome no endereço (maiúsculas, hífen, underline).
+
+"Esta página não está funcionando" / "localhost recusou a conexão"
+  -> O Apache está desligado. Start no XAMPP.
+
+Aparece o CÓDIGO PHP na tela em vez da página
+  -> Você abriu o arquivo direto (file:///C:/...). Abra pelo
+     localhost/... e com o arquivo DENTRO do htdocs.
+
+------------------------------------------------------------------
+ BANCO DE DADOS / CONEXÃO
+------------------------------------------------------------------
+"Access denied for user 'root'@'localhost' (using password: NO)"
+  O MySQL tem senha e você está mandando vazio.
+  -> Coloque a senha certa no $senha do conexao.php.
+  -> No seu PC: provavelmente é o MySQL 8.4 que está ligado e não o
+     do XAMPP (ver "Port 3306 in use" acima).
+
+"Unknown database 'saep_estoque'"
+  -> Você não rodou o banco.sql, ou o nome no conexao.php está
+     diferente do nome do banco.
+
+"No connection could be made because the target machine actively refused it"
+  -> O MySQL está desligado. Start no XAMPP.
+
+"Table 'xxx.produtos' doesn't exist"
+  -> A tabela não foi criada ou o nome está diferente (singular x
+     plural: produto x produtos).
+
+"Unknown column 'xxx' in 'field list'"
+  -> Você usou um nome de coluna que não existe na tabela. Confira
+     no phpMyAdmin (aba Estrutura) e no SQL.
+
+"You have an error in your SQL syntax ... near 'xxx'"
+  -> O erro está logo ANTES do texto que ele mostra. Causas comuns:
+     vírgula faltando ou sobrando, aspas faltando em texto,
+     palavra reservada como nome de coluna.
+  -> Dica: faça  echo $sql;  antes do mysqli_query, copie o SQL
+     que apareceu e rode no phpMyAdmin pra ver o erro.
+
+"Cannot add or update a child row: a foreign key constraint fails"
+  -> Você está inserindo um produto_id (ou usuario_id) que NÃO
+     EXISTE na tabela pai. Confira os ids.
+
+"Cannot delete or update a parent row: a foreign key constraint fails"
+  -> Está apagando um registro que outros usam. Apague os filhos
+     antes, ou crie a FK com ON DELETE CASCADE.
+
+"Duplicate entry 'admin' for key 'login'"
+  -> Campo UNIQUE com valor repetido.
+
+"Incorrect integer value: '' for column"
+  -> Mandou texto vazio pra coluna número. Use (int)$valor no PHP.
+
+Acentos aparecendo errado (Ã©, ?)
+  -> <meta charset="UTF-8"> no HTML,
+     mysqli_set_charset($conexao, "utf8mb4"); no conexao.php,
+     banco criado com CHARACTER SET utf8mb4,
+     e o arquivo salvo como UTF-8 (no VS Code: canto inferior
+     direito da tela mostra a codificação).
+
+------------------------------------------------------------------
+ PHP
+------------------------------------------------------------------
+"Parse error: syntax error, unexpected ..." on line X
+  -> Erro de digitação perto da linha X (ou na anterior).
+     Quase sempre: falta ; no fim da linha, falta } ou ), ou aspas
+     não fechadas.
+
+"Parse error: unexpected end of file"
+  -> Falta fechar um { com }. Conte as chaves.
+
+"Warning: Undefined variable $xxx"
+  -> Usou uma variável antes de criar, ou escreveu o nome diferente
+     ($Nome x $nome).
+
+"Warning: Undefined array key 'nome'"
+  -> O $_POST['nome'] não veio. Confira o name="nome" no input
+     (igualzinho), ou use  $_POST['nome'] ?? ''
+
+"Fatal error: Call to undefined function xxx()"
+  -> A função não existe: nome errado ou esqueceu o
+     include "funcoes.php";
+
+"Warning: Cannot modify header information - headers already sent"
+  -> Você fez echo ou tem HTML/espaço ANTES do header("Location")
+     ou do session_start(). Coloque esses no topo do arquivo, antes
+     de qualquer HTML. Confira também se não tem espaço ou linha em
+     branco antes do <?php.
+
+"Fatal error: Uncaught TypeError: mysqli_fetch_assoc(): Argument #1
+ must be of type mysqli_result, bool given"
+  -> O mysqli_query deu ERRO (devolveu false). O problema é o SQL.
+     Coloque  echo mysqli_error($conexao);  pra ver o motivo.
+
+"Fatal error: Uncaught mysqli_sql_exception: ..."
+  -> Em PHP 8.1 ou mais novo, erro de SQL vira exceção. Leia a
+     mensagem (é o erro do SQL). O mysqli_report(MYSQLI_REPORT_OFF)
+     no conexao.php volta pro comportamento antigo.
+
+Página em branco, sem erro nenhum
+  -> Coloque no topo do arquivo:
+       ini_set('display_errors', 1);
+       error_reporting(E_ALL);
+
+O formulário envia mas não salva nada
+  -> Confira: method="post" no form; name="" em todos os campos;
+     botão type="submit"; o if ($_SERVER['REQUEST_METHOD']=='POST');
+     faça echo $sql; pra ver o SQL.
+
+Login nunca funciona (sempre "senha incorreta")
+  -> A senha no banco tem que ser o HASH (gerado pelo
+     password_hash), não o texto "123". Use o gerar-hash.php da
+     pasta 07. E a coluna senha tem que ser VARCHAR(255).
+
+------------------------------------------------------------------
+ HTML / CSS / JS
+------------------------------------------------------------------
+O CSS não muda nada
+  -> Confira o caminho no <link href="estilo.css">.
+  -> Ctrl + F5 no navegador (limpa o cache).
+  -> Classe escrita diferente no HTML e no CSS.
+
+O JavaScript não funciona
+  -> F12 > aba Console. O erro aparece em vermelho com a linha.
+
+------------------------------------------------------------------
+ REGRA GERAL QUANDO TRAVAR
+------------------------------------------------------------------
+  1. LEIA a mensagem de erro inteira (arquivo + linha).
+  2. Salvou o arquivo? (Ctrl + S)
+  3. Recarregou a página? (F5)
+  4. echo / var_dump pra ver o que tem nas variáveis.
+  5. Compare com o código que funciona desta pasta.
+  6. Não perca mais de 10 minutos num erro: pule pra próxima
+     tarefa e volte depois.

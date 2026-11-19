@@ -1,0 +1,69 @@
+==================================================================
+  09 - ALGORITMOS DE ORDENAÇÃO
+==================================================================
+
+POR QUE ISSO ESTÁ AQUI?
+  A prova do SAEP costuma pedir algo como:
+    "Listar os produtos em ordem alfabética utilizando um
+     ALGORITMO DE ORDENAÇÃO".
+  Isso quer dizer: NÃO basta usar o ORDER BY do SQL nem o sort()
+  pronto do PHP. Você tem que escrever o algoritmo (Bubble Sort,
+  por exemplo) e usar ele. (Se a prova não pedir algoritmo, use
+  ORDER BY nome que é mais fácil.)
+
+  Aproveite e escreva um comentário no código dizendo qual
+  algoritmo você usou, assim o avaliador acha fácil.
+
+------------------------------------------------------------------
+ ARQUIVOS
+------------------------------------------------------------------
+  bubble-sort.php .... Bubble Sort pra números, textos e pra lista
+                       que vem do banco (bubbleSortPorCampo)
+                       >>> É ESSE QUE VOCÊ VAI USAR <<<
+  insertion-sort.php . outro algoritmo, caso peçam outro
+  (o Bubble Sort em JavaScript está em 08-javascript/exemplos.html)
+
+  Pra ver funcionando: copie a pasta pra C:\xampp\htdocs\ e abra
+  localhost/09-ordenacao-algoritmos/bubble-sort.php
+
+------------------------------------------------------------------
+ BUBBLE SORT EXPLICADO COMO PRA UMA CRIANÇA
+------------------------------------------------------------------
+  Imagine uma fila de pessoas por altura, bagunçada.
+  Você anda do começo ao fim da fila olhando de 2 em 2:
+    "O da esquerda é mais alto que o da direita? Troca eles."
+  Quando chega no fim, o mais alto de todos está no final.
+  Volta pro começo e faz de novo (agora sem olhar o último).
+  Repete até ninguém precisar trocar.
+
+  Em código, são DOIS for, um dentro do outro, e uma TROCA:
+
+    for ($i = 0; $i < $n - 1; $i++) {
+        for ($j = 0; $j < $n - 1 - $i; $j++) {
+            if ($lista[$j] > $lista[$j + 1]) {
+                $temp = $lista[$j];
+                $lista[$j] = $lista[$j + 1];
+                $lista[$j + 1] = $temp;
+            }
+        }
+    }
+
+  Pra TEXTO, troque a comparação  $lista[$j] > $lista[$j+1]
+  por  strcasecmp($lista[$j], $lista[$j+1]) > 0
+
+  Pra ordem DECRESCENTE (Z->A ou maior->menor), troque o > por <
+
+------------------------------------------------------------------
+ SE PERGUNTAREM (teoria)
+------------------------------------------------------------------
+  Bubble Sort ..... compara vizinhos e troca. Simples, mas lento
+                    pra listas grandes. Complexidade O(n²).
+  Insertion Sort .. encaixa cada item no lugar certo. Bom pra
+                    listas pequenas ou quase ordenadas. O(n²).
+  Selection Sort .. acha o menor e coloca no começo, repete. O(n²).
+  Quick Sort / Merge Sort .. mais rápidos, O(n log n), mais
+                    difíceis de escrever.
+
+  ACENTOS: strcasecmp não entende acento ("Ágata" vai pro final).
+  Normalmente não tem problema na prova. Se tiver, pode tirar os
+  acentos antes de comparar, ou comparar com strcmp(strtolower(...)).

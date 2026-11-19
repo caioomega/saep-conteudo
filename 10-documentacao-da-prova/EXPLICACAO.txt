@@ -1,0 +1,55 @@
+==================================================================
+  10 - DOCUMENTAÇÃO DA PROVA (as entregas que não são código)
+==================================================================
+
+A prova prática NÃO é só programar. Ela costuma pedir documentos
+também, e eles valem ponto! São rápidos de fazer com os modelos
+desta pasta. Copie, troque pelo tema da sua prova e entregue.
+
+------------------------------------------------------------------
+ ARQUIVOS
+------------------------------------------------------------------
+  modelo-requisitos-funcionais.txt ... lista do que o sistema FAZ
+  modelo-casos-de-teste.txt .......... como testar cada função
+  modelo-lista-infraestrutura.txt .... programas e versões usados
+  (a descrição do DER está em 03-der-modelagem/der-exemplo-estoque.txt)
+
+------------------------------------------------------------------
+ O QUE É CADA UM
+------------------------------------------------------------------
+  REQUISITO FUNCIONAL (RF)
+    O que o sistema FAZ. Sempre começa com "O sistema deve...".
+      RF01 - O sistema deve permitir que o usuário faça login.
+
+  REQUISITO NÃO FUNCIONAL (RNF)
+    COMO o sistema é / restrições (segurança, desempenho,
+    tecnologia). Só faça se a prova pedir.
+      RNF01 - As senhas devem ser armazenadas criptografadas.
+
+  CASO DE TESTE
+    Um "roteiro" pra testar uma função: o que fazer, com quais dados
+    e o que deve acontecer. Tem que ter teste que DÁ CERTO e teste
+    que DÁ ERRO (ex.: senha errada, campo vazio).
+
+  LISTA DE INFRAESTRUTURA
+    Tudo que foi usado pra fazer e rodar o sistema: sistema
+    operacional, linguagem, banco de dados, servidor, editor,
+    navegador... com as VERSÕES.
+
+------------------------------------------------------------------
+ COMO DESCOBRIR AS VERSÕES (pra lista de infraestrutura)
+------------------------------------------------------------------
+  Windows ... tecla Windows + R, digite  winver  e Enter
+  PHP ....... crie um arquivo com  <?php phpinfo(); ?>  e abra
+              no navegador, ou olhe no localhost/dashboard
+  MySQL ..... no phpMyAdmin, aparece na página inicial
+              ("Versão do servidor"), ou rode  SELECT VERSION();
+  XAMPP ..... no XAMPP Control Panel, aparece no título da janela
+  Apache .... localhost/dashboard  ou phpinfo()
+  Navegador . Chrome: menu ⋮ > Ajuda > Sobre o Google Chrome
+              Edge: menu ... > Ajuda e comentários > Sobre
+  VS Code ... Ajuda > Sobre
+
+  No seu PC (quando este material foi feito):
+    PHP 8.0.30 (XAMPP), MySQL Server 8.4 instalado, MySQL
+    Workbench 8.0 CE. No PC da prova pode ser diferente: CONFIRA.

@@ -1,0 +1,201 @@
+==================================================================
+  19 - TEORIA QUE PODE CAIR (resumão)
+  UML, metodologias, testes, banco, segurança, LGPD
+==================================================================
+
+==================================================================
+ 1. UML (desenhos do sistema)
+==================================================================
+ UML é um conjunto de diagramas padrão pra desenhar software.
+
+ DIAGRAMA DE CASOS DE USO (o que cada pessoa pode fazer)
+   - ATOR: bonequinho palito. Quem usa o sistema (Funcionário,
+     Administrador, Cliente). Pode ser outro sistema também.
+   - CASO DE USO: elipse (oval) com um VERBO: "Cadastrar produto",
+     "Fazer login", "Registrar saída".
+   - Linha ligando o ator ao caso de uso = ele faz aquilo.
+   - Retângulo em volta dos casos de uso = o sistema.
+   - <<include>> : um caso SEMPRE usa outro
+       "Registrar saída" --<<include>>--> "Fazer login"
+   - <<extend>>  : um caso às VEZES acontece junto
+       "Emitir alerta de estoque" --<<extend>>--> "Registrar saída"
+
+   Exemplo em texto (estoque):
+
+        +-------------------- Sistema de Estoque ---------------------+
+        |                                                             |
+   O    |   ( Fazer login )                                           |
+  /|\ --|-- ( Cadastrar/editar/excluir produto )                      |
+  / \   |   ( Buscar produto )                                        |
+Funcio- |   ( Registrar entrada )                                     |
+nário   |   ( Registrar saída ) <---<<extend>>--- ( Emitir alerta )   |
+        |   ( Consultar histórico )                                   |
+        +-------------------------------------------------------------+
+
+ DIAGRAMA DE CLASSES (as classes e suas ligações)
+   Caixa dividida em 3 partes:
+        +---------------------------+
+        |         Produto           |   <- nome
+        +---------------------------+
+        | - id: int                 |   <- atributos
+        | - nome: String            |      (- private, + public,
+        | - quantidade: int         |       # protected)
+        +---------------------------+
+        | + getNome(): String       |   <- métodos
+        | + estaAbaixoDoMinimo(): bool
+        +---------------------------+
+   Ligações:
+     Herança ........ seta com triângulo vazio apontando pro PAI
+     Associação ..... linha simples (com 1, *, 0..1 nas pontas)
+     Agregação ...... losango VAZIO (o todo e a parte vivem
+                      separados: Time <>-- Jogador)
+     Composição ..... losango CHEIO (a parte morre com o todo:
+                      Pedido <#>-- ItemPedido)
+
+ DIAGRAMA DE SEQUÊNCIA: a ordem das mensagens entre objetos no
+   tempo (linhas verticais com setas indo e voltando).
+ DIAGRAMA DE ATIVIDADES: parecido com fluxograma (início, ações,
+   decisões em losango, fim).
+
+==================================================================
+ 2. FLUXOGRAMA (lógica)
+==================================================================
+   Oval ............ início / fim
+   Retângulo ....... processo (ação)
+   Losango ......... decisão (sim/não)
+   Paralelogramo ... entrada/saída de dados (ler/mostrar)
+   Setas ........... o caminho
+
+==================================================================
+ 3. REQUISITOS
+==================================================================
+   Funcional (RF) ...... O QUE o sistema faz. "O sistema deve
+                         permitir cadastrar produtos."
+   Não funcional (RNF) . COMO / qualidade / restrição: desempenho,
+                         segurança, usabilidade, tecnologia.
+                         "O sistema deve responder em até 2 s."
+   Regra de negócio .... regra da empresa. "Não pode haver saída
+                         maior que o estoque."
+   Modelos prontos: pasta 10.
+
+==================================================================
+ 4. METODOLOGIAS DE DESENVOLVIMENTO
+==================================================================
+ CASCATA (tradicional): uma fase depois da outra, sem voltar:
+   requisitos -> análise -> projeto -> implementação -> testes
+   -> implantação -> manutenção. Bom quando o escopo é fixo.
+
+ ÁGIL: entregas pequenas e frequentes, aceita mudanças, cliente
+   perto. (Manifesto Ágil: pessoas > processos, software
+   funcionando > documentação, colaboração > contrato,
+   responder a mudanças > seguir plano)
+
+ SCRUM (o ágil mais cobrado):
+   Papéis:
+     Product Owner (PO) .. dono do produto, decide as prioridades,
+                           cuida do Product Backlog
+     Scrum Master ........ facilitador, remove impedimentos
+     Time de desenvolvimento (Developers)
+   Artefatos:
+     Product Backlog ..... lista de TUDO que o produto precisa
+     Sprint Backlog ...... o que o time vai fazer NESTA sprint
+     Incremento .......... o pedaço pronto no fim da sprint
+   Eventos:
+     Sprint .............. ciclo de 1 a 4 semanas
+     Sprint Planning ..... planeja a sprint
+     Daily Scrum ......... reunião diária de 15 min (o que fiz,
+                           o que vou fazer, impedimentos)
+     Sprint Review ....... mostra o que foi feito pro cliente
+     Sprint Retrospective  o time melhora o próprio jeito de
+                           trabalhar
+   User Story: "Como [funcionário], quero [registrar saída] para
+                [controlar o estoque]."
+
+ KANBAN: quadro com colunas  A FAZER | FAZENDO | FEITO, com
+   cartões. Limita quantas tarefas ficam em "fazendo" ao mesmo
+   tempo (WIP).
+
+==================================================================
+ 5. TESTES
+==================================================================
+   Unitário ........ testa uma função/método sozinho
+   Integração ...... testa partes juntas (PHP + banco)
+   Sistema ......... testa o sistema inteiro
+   Aceitação ....... o cliente testa se é o que ele queria
+   Regressão ....... testa de novo o que já funcionava depois de
+                     mudar algo
+   Caixa-preta ..... testa sem olhar o código (só entrada/saída)
+   Caixa-branca .... testa olhando o código (caminhos, if/else)
+   Usabilidade ..... é fácil de usar?
+   Caso de teste ... roteiro: pré-condição, passos, dados,
+                     resultado esperado x obtido (pasta 10)
+   Verificação = "construí certo?" | Validação = "construí a
+   coisa certa?"
+
+==================================================================
+ 6. BANCO DE DADOS - TEORIA
+==================================================================
+   SGBD ........ o programa que gerencia o banco (MySQL, MariaDB,
+                 PostgreSQL, SQL Server, Oracle, SQLite)
+   DDL ......... comandos de ESTRUTURA: CREATE, ALTER, DROP
+   DML ......... comandos de DADOS: INSERT, UPDATE, DELETE, SELECT
+                 (alguns separam SELECT como DQL)
+   DCL ......... permissões: GRANT, REVOKE
+   PK / FK ..... chave primária / chave estrangeira (pasta 02)
+   Integridade referencial: a FK só aceita valores que existem
+                 na tabela pai.
+
+   NORMALIZAÇÃO (evitar repetição de dados):
+   1FN: cada campo guarda UM valor só (nada de "tel1, tel2" na
+        mesma célula) e não tem grupos repetidos.
+   2FN: está na 1FN e todo campo depende da chave INTEIRA (vale
+        pra chave composta).
+   3FN: está na 2FN e nenhum campo depende de outro campo que não
+        é chave (ex.: cidade -> estado: separa numa tabela).
+
+   ACID (transações): Atomicidade (tudo ou nada), Consistência,
+   Isolamento, Durabilidade.
+
+==================================================================
+ 7. SEGURANÇA
+==================================================================
+   SQL Injection ... alguém digita SQL no campo pra mexer no banco.
+                     Proteção: prepared statements (? do PDO/JDBC)
+                     ou mysqli_real_escape_string + (int).
+   XSS ............. alguém salva <script> no campo e ele roda na
+                     tela dos outros. Proteção: htmlspecialchars()
+                     ao mostrar.
+   Senha ........... NUNCA guardar em texto puro: password_hash()
+                     e password_verify() (bcrypt).
+   Controle de acesso: verificar login em toda página (sessão).
+   HTTPS ........... criptografa a comunicação.
+
+==================================================================
+ 8. LGPD (Lei Geral de Proteção de Dados - Lei 13.709/2018)
+==================================================================
+   - Protege dados pessoais (nome, CPF, e-mail, endereço...).
+   - Dado SENSÍVEL: saúde, religião, origem racial, biometria,
+     opinião política, vida sexual...
+   - Titular: a pessoa dona dos dados. Controlador: quem decide o
+     uso. Operador: quem trata em nome do controlador.
+     Encarregado (DPO): o contato entre empresa, titular e ANPD.
+   - Precisa de uma BASE LEGAL (ex.: consentimento) e de
+     FINALIDADE clara. Coletar só o necessário.
+   - ANPD: órgão que fiscaliza.
+
+==================================================================
+ 9. ARQUITETURA / WEB
+==================================================================
+   Front-end ...... o que roda no navegador (HTML, CSS, JS)
+   Back-end ....... o que roda no servidor (PHP, Node, Java)
+   Cliente-servidor: o navegador (cliente) pede, o servidor
+                     responde.
+   HTTP ........... protocolo da web. Métodos GET, POST, PUT,
+                    DELETE. Status 200, 404, 500 (pasta 15).
+   API REST / JSON  pasta 15.
+   localhost ...... o próprio computador (127.0.0.1)
+   Porta .......... "porta de entrada" de um programa: Apache 80,
+                    MySQL 3306, HTTPS 443.
+   IDE ............ programa pra programar (VS Code, NetBeans,
+                    IntelliJ, Eclipse, Android Studio).
+   Versionamento .. Git (pasta 20).

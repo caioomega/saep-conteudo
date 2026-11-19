@@ -1,0 +1,76 @@
+==================================================================
+  REQUISITOS FUNCIONAIS - SISTEMA DE CONTROLE DE ESTOQUE
+  (troque pelo tema da sua prova)
+==================================================================
+
+RF01 - Autenticação
+  O sistema deve permitir que o usuário acesse o sistema
+  informando login e senha.
+
+RF02 - Falha na autenticação
+  O sistema deve exibir uma mensagem de erro e permanecer na tela
+  de login quando o login ou a senha estiverem incorretos.
+
+RF03 - Identificação do usuário
+  O sistema deve exibir o nome do usuário logado na tela principal.
+
+RF04 - Logout
+  O sistema deve permitir que o usuário saia do sistema, retornando
+  à tela de login.
+
+RF05 - Controle de acesso
+  O sistema deve impedir o acesso às telas internas sem que o
+  usuário esteja autenticado.
+
+RF06 - Listar produtos
+  O sistema deve listar os produtos cadastrados em uma tabela.
+
+RF07 - Buscar produtos
+  O sistema deve permitir buscar produtos por nome, categoria ou
+  marca.
+
+RF08 - Cadastrar produto
+  O sistema deve permitir cadastrar um novo produto informando
+  nome, descrição, categoria, marca, preço, quantidade e estoque
+  mínimo.
+
+RF09 - Editar produto
+  O sistema deve permitir alterar os dados de um produto existente.
+
+RF10 - Excluir produto
+  O sistema deve permitir excluir um produto, pedindo confirmação
+  antes.
+
+RF11 - Validar dados do produto
+  O sistema deve validar os campos obrigatórios e não aceitar
+  valores negativos para preço, quantidade e estoque mínimo,
+  exibindo mensagem de erro.
+
+RF12 - Ordenar produtos
+  O sistema deve exibir os produtos na gestão de estoque em ordem
+  alfabética, utilizando um algoritmo de ordenação (Bubble Sort).
+
+RF13 - Registrar entrada
+  O sistema deve permitir registrar a entrada de produtos no
+  estoque, informando produto, quantidade e data.
+
+RF14 - Registrar saída
+  O sistema deve permitir registrar a saída de produtos do estoque,
+  informando produto, quantidade e data, sem permitir quantidade
+  maior que a disponível.
+
+RF15 - Alerta de estoque mínimo
+  O sistema deve emitir um alerta quando a quantidade de um produto
+  ficar abaixo do estoque mínimo definido.
+
+RF16 - Histórico de movimentações
+  O sistema deve exibir o histórico de entradas e saídas, com data,
+  produto, tipo, quantidade e usuário responsável.
+
+==================================================================
+  REQUISITOS NÃO FUNCIONAIS (só se a prova pedir)
+==================================================================
+RNF01 - O sistema deve ser acessado por navegador web.
+RNF02 - O sistema deve ser desenvolvido em PHP com banco MySQL.
+RNF03 - As senhas devem ser armazenadas de forma criptografada.
+RNF04 - O sistema deve ter interface simples e em português.

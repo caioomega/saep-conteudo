@@ -1,0 +1,72 @@
+==================================================================
+  08 - JAVASCRIPT
+==================================================================
+
+O QUE É?
+  JavaScript (JS) roda NO NAVEGADOR (diferente do PHP, que roda no
+  servidor). Serve pra coisas "na hora", sem recarregar a página:
+    - perguntar "tem certeza?" antes de excluir
+    - mostrar um alerta
+    - validar o formulário antes de enviar
+    - esconder/mostrar coisas, mudar textos
+
+------------------------------------------------------------------
+ ARQUIVO DESTA PASTA
+------------------------------------------------------------------
+  exemplos.html ... dê dois cliques pra abrir no navegador. Tem os
+                    5 exemplos funcionando. Abra também no editor
+                    pra ver o código comentado.
+
+------------------------------------------------------------------
+ ONDE COLOCAR O JAVASCRIPT
+------------------------------------------------------------------
+  Opção 1: direto na tag (pra coisa pequena)
+     <a href="excluir.php?id=3" onclick="return confirm('Excluir?');">Excluir</a>
+
+  Opção 2: dentro de <script> no final do <body>
+     <script>
+         function minhaFuncao() { ... }
+     </script>
+
+  Opção 3: num arquivo separado script.js
+     <script src="script.js"></script>   (antes de fechar o </body>)
+
+------------------------------------------------------------------
+ OS 5 COMANDOS QUE MAIS USA
+------------------------------------------------------------------
+  alert("mensagem");                  caixa de aviso
+  confirm("tem certeza?")             OK = true, Cancelar = false
+  document.getElementById("id")       pega um elemento da página
+  elemento.value                      o que foi digitado no campo
+  elemento.innerHTML = "<b>oi</b>"    troca o conteúdo
+
+------------------------------------------------------------------
+ SINTAXE BÁSICA (parecida com PHP, mas SEM o $)
+------------------------------------------------------------------
+  let nome = "Ana";          // variável
+  const PI = 3.14;           // constante (não muda)
+  if (x > 5) { ... } else { ... }
+  for (let i = 0; i < 10; i++) { ... }
+  function somar(a, b) { return a + b; }
+  "Olá " + nome              // junta texto com + (no PHP é .)
+  ===                        // igual (use 3 iguais no JS)
+  !==                        // diferente
+  Number("10")               // transforma texto em número
+
+------------------------------------------------------------------
+ ALERTA DE ESTOQUE VINDO DO PHP (truque usado na pasta 11)
+------------------------------------------------------------------
+  O PHP pode "escrever" um JavaScript na página:
+
+     <?php if ($estoque_baixo) { ?>
+         <script>alert("Atenção: estoque abaixo do mínimo!");</script>
+     <?php } ?>
+
+  Assim, depois de salvar uma saída, aparece o alerta na tela.
+
+------------------------------------------------------------------
+ ACHAR ERRO NO JAVASCRIPT
+------------------------------------------------------------------
+  Aperte F12 no navegador > aba "Console". Os erros aparecem em
+  vermelho com o número da linha. Use console.log(variavel) pra
+  ver valores.

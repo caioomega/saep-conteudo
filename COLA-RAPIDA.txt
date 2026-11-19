@@ -1,0 +1,227 @@
+==================================================================
+  COLA RÁPIDA - OS CÓDIGOS QUE VOCÊ MAIS VAI COPIAR
+  (troque "produtos", "nome" etc. pelos nomes da sua prova)
+==================================================================
+
+------------------------------------------------------------------
+ 1. SQL - CRIAR BANCO E TABELAS (com chave estrangeira)
+------------------------------------------------------------------
+DROP DATABASE IF EXISTS meu_banco;
+CREATE DATABASE meu_banco CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE meu_banco;
+
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    login VARCHAR(50) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL DEFAULT 0,
+    quantidade INT NOT NULL DEFAULT 0,
+    estoque_minimo INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE movimentacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    tipo ENUM('entrada','saida') NOT NULL,
+    quantidade INT NOT NULL,
+    data_movimentacao DATE NOT NULL,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+
+-- senha "123" criptografada:
+INSERT INTO usuarios (nome, login, senha) VALUES
+('Administrador','admin','$2y$10$T7hel8a59Zby.PSLFDplh.3R0.ovVkHGQWiDgJDd3dC5p/3eIbSnO');
+
+------------------------------------------------------------------
+ 2. PHP - CONEXÃO (conexao.php)
+------------------------------------------------------------------
+<?php
+mysqli_report(MYSQLI_REPORT_OFF);
+$conexao = mysqli_connect("localhost", "root", "", "meu_banco");
+if (!$conexao) { die("Erro: " . mysqli_connect_error()); }
+mysqli_set_charset($conexao, "utf8mb4");
+?>
+
+------------------------------------------------------------------
+ 3. LISTAR (SELECT + while)
+------------------------------------------------------------------
+<?php
+include "conexao.php";
+$resultado = mysqli_query($conexao, "SELECT * FROM produtos ORDER BY nome");
+?>
+<table>
+  <tr><th>Nome</th><th>Qtd</th><th>Ações</th></tr>
+  <?php while ($p = mysqli_fetch_assoc($resultado)) { ?>
+  <tr>
+    <td><?php echo htmlspecialchars($p['nome']); ?></td>
+    <td><?php echo $p['quantidade']; ?></td>
+    <td>
+      <a href="editar.php?id=<?php echo $p['id']; ?>">Editar</a>
+      <a href="excluir.php?id=<?php echo $p['id']; ?>"
+         onclick="return confirm('Excluir?');">Excluir</a>
+    </td>
+  </tr>
+  <?php } ?>
+</table>
+
+------------------------------------------------------------------
+ 4. BUSCAR (LIKE)
+------------------------------------------------------------------
+$busca = trim($_GET['busca'] ?? '');
+$b = mysqli_real_escape_string($conexao, $busca);
+$sql = "SELECT * FROM produtos WHERE nome LIKE '%$b%' ORDER BY nome";
+
+<form method="get">
+  <input type="text" name="busca" value="<?php echo htmlspecialchars($busca); ?>">
+  <button type="submit">Buscar</button>
+</form>
+
+------------------------------------------------------------------
+ 5. CADASTRAR (form + validação + INSERT)
+------------------------------------------------------------------
+<?php
+include "conexao.php";
+$erro = "";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = trim($_POST['nome'] ?? '');
+    $qtd  = trim($_POST['quantidade'] ?? '');
+
+    if ($nome == "") {
+        $erro = "Preencha o nome.";
+    } elseif (!ctype_digit($qtd)) {
+        $erro = "Quantidade inválida.";
+    } else {
+        $n = mysqli_real_escape_string($conexao, $nome);
+        $q = (int)$qtd;
+        mysqli_query($conexao, "INSERT INTO produtos (nome, quantidade) VALUES ('$n', $q)");
+        header("Location: index.php?msg=salvo");
+        exit;
+    }
+}
+?>
+<?php if ($erro) echo "<p style='color:red'>$erro</p>"; ?>
+<form method="post">
+  <input type="text" name="nome" required>
+  <input type="number" name="quantidade" min="0" required>
+  <button type="submit">Salvar</button>
+</form>
+
+------------------------------------------------------------------
+ 6. EDITAR (buscar pelo id + UPDATE)
+------------------------------------------------------------------
+ No PHP (topo da página):
+$id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
+$p = mysqli_fetch_assoc(mysqli_query($conexao, "SELECT * FROM produtos WHERE id = $id"));
+
+ No HTML do formulário (o id vai escondido e os campos já preenchidos):
+<input type="hidden" name="id" value="<?php echo $id; ?>">
+<input name="nome" value="<?php echo htmlspecialchars($p['nome']); ?>">
+
+ Ao salvar (dentro do if POST, depois de validar):
+mysqli_query($conexao, "UPDATE produtos SET nome='$n', quantidade=$q WHERE id = $id");
+
+------------------------------------------------------------------
+ 7. EXCLUIR (excluir.php)
+------------------------------------------------------------------
+<?php
+include "conexao.php";
+$id = (int)($_GET['id'] ?? 0);
+mysqli_query($conexao, "DELETE FROM produtos WHERE id = $id");
+header("Location: index.php?msg=excluido");
+exit;
+?>
+
+------------------------------------------------------------------
+ 8. LOGIN
+------------------------------------------------------------------
+<?php
+session_start();
+include "conexao.php";
+$erro = "";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $l = mysqli_real_escape_string($conexao, trim($_POST['login']));
+    $u = mysqli_fetch_assoc(mysqli_query($conexao, "SELECT * FROM usuarios WHERE login = '$l'"));
+    if ($u && password_verify($_POST['senha'], $u['senha'])) {
+        $_SESSION['usuario_id'] = $u['id'];
+        $_SESSION['usuario_nome'] = $u['nome'];
+        header("Location: principal.php");
+        exit;
+    }
+    $erro = "Login ou senha incorretos.";
+}
+?>
+
+ PROTEGER PÁGINA (primeira linha):
+<?php
+session_start();
+if (!isset($_SESSION['usuario_id'])) { header("Location: login.php"); exit; }
+?>
+
+ MOSTRAR NOME:  Olá, <?php echo $_SESSION['usuario_nome']; ?>
+ SAIR (logout.php):  <?php session_start(); session_destroy(); header("Location: login.php"); exit; ?>
+
+------------------------------------------------------------------
+ 9. BUBBLE SORT (ordem alfabética das linhas do banco)
+------------------------------------------------------------------
+function bubbleSortPorCampo($lista, $campo) {
+    $n = count($lista);
+    for ($i = 0; $i < $n - 1; $i++) {
+        for ($j = 0; $j < $n - 1 - $i; $j++) {
+            if (strcasecmp($lista[$j][$campo], $lista[$j + 1][$campo]) > 0) {
+                $temp = $lista[$j];
+                $lista[$j] = $lista[$j + 1];
+                $lista[$j + 1] = $temp;
+            }
+        }
+    }
+    return $lista;
+}
+// uso:
+$res = mysqli_query($conexao, "SELECT * FROM produtos");
+$produtos = [];
+while ($linha = mysqli_fetch_assoc($res)) { $produtos[] = $linha; }
+$produtos = bubbleSortPorCampo($produtos, 'nome');
+foreach ($produtos as $p) { echo $p['nome'] . "<br>"; }
+
+------------------------------------------------------------------
+ 10. ENTRADA / SAÍDA + ALERTA DE ESTOQUE MÍNIMO
+------------------------------------------------------------------
+$prod = mysqli_fetch_assoc(mysqli_query($conexao, "SELECT * FROM produtos WHERE id = $produto_id"));
+if ($tipo == "saida" && $qtd > $prod['quantidade']) {
+    $erro = "Estoque insuficiente.";
+} else {
+    $nova = ($tipo == "entrada") ? $prod['quantidade'] + $qtd : $prod['quantidade'] - $qtd;
+    mysqli_query($conexao, "INSERT INTO movimentacoes (produto_id, usuario_id, tipo, quantidade, data_movimentacao)
+                            VALUES ($produto_id, {$_SESSION['usuario_id']}, '$tipo', $qtd, '$data')");
+    mysqli_query($conexao, "UPDATE produtos SET quantidade = $nova WHERE id = $produto_id");
+    if ($nova < $prod['estoque_minimo']) {
+        echo "<script>alert('Atenção: estoque abaixo do mínimo!');</script>";
+    }
+}
+
+------------------------------------------------------------------
+ 11. JOIN (mostrar nome do produto no histórico)
+------------------------------------------------------------------
+SELECT m.*, p.nome AS produto, u.nome AS usuario
+FROM movimentacoes m
+INNER JOIN produtos p ON m.produto_id = p.id
+INNER JOIN usuarios u ON m.usuario_id = u.id
+ORDER BY m.data_movimentacao DESC;
+
+------------------------------------------------------------------
+ 12. ÚTEIS
+------------------------------------------------------------------
+ Data de hoje pro input date:  value="<?php echo date('Y-m-d'); ?>"
+ Data BR:      date('d/m/Y', strtotime($data))
+ Dinheiro BR:  "R$ " . number_format($valor, 2, ',', '.')
+ Ver erro SQL: echo mysqli_error($conexao);
+ Ver variável: var_dump($x);   print_r($array);
+ Mostrar erros PHP: ini_set('display_errors', 1); error_reporting(E_ALL);

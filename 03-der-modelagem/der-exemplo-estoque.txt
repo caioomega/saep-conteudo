@@ -1,0 +1,55 @@
+==================================================================
+  DER - EXEMPLO DO SISTEMA DE ESTOQUE (pasta 11)
+==================================================================
+
+  +----------------------+                      +---------------------------+
+  |       USUARIOS       |                      |         PRODUTOS          |
+  +----------------------+                      +---------------------------+
+  | PK id INT            |                      | PK id INT                 |
+  |    nome VARCHAR(100) |                      |    nome VARCHAR(100)      |
+  |    login VARCHAR(50) |                      |    descricao TEXT         |
+  |    senha VARCHAR(255)|                      |    categoria VARCHAR(50)  |
+  +----------------------+                      |    marca VARCHAR(50)      |
+            | 1                                 |    preco DECIMAL(10,2)    |
+            |                                   |    quantidade INT         |
+            | realiza                           |    estoque_minimo INT     |
+            |                                   +---------------------------+
+            | N                                              | 1
+  +-------------------------------+                          |
+  |         MOVIMENTACOES         |          possui          |
+  +-------------------------------+--------------------------+
+  | PK id INT                     | N
+  | FK produto_id INT  -> produtos.id
+  | FK usuario_id INT  -> usuarios.id
+  |    tipo ENUM('entrada','saida')
+  |    quantidade INT
+  |    data_movimentacao DATE
+  |    observacao VARCHAR(255)
+  +-------------------------------+
+
+  LEITURA DO DESENHO:
+   - Um USUÁRIO realiza VÁRIAS movimentações (1:N).
+     Cada movimentação foi feita por UM usuário.
+   - Um PRODUTO possui VÁRIAS movimentações (1:N).
+     Cada movimentação é de UM produto.
+   - Por isso a tabela MOVIMENTACOES tem as duas chaves
+     estrangeiras (produto_id e usuario_id): a FK fica no lado N.
+
+==================================================================
+  TEXTO PRONTO PARA DESCREVER O DER (adapte e entregue junto)
+==================================================================
+  O banco de dados "saep_estoque" possui três entidades:
+
+  - usuarios: guarda as pessoas que podem acessar o sistema
+    (id, nome, login e senha criptografada).
+  - produtos: guarda os produtos do estoque (id, nome, descrição,
+    categoria, marca, preço, quantidade atual e estoque mínimo).
+  - movimentacoes: guarda o histórico de entradas e saídas
+    (id, produto, usuário responsável, tipo, quantidade, data e
+    observação).
+
+  Relacionamentos:
+  - usuarios 1:N movimentacoes (um usuário realiza várias
+    movimentações; cada movimentação pertence a um usuário).
+  - produtos 1:N movimentacoes (um produto possui várias
+    movimentações; cada movimentação se refere a um produto).

@@ -1,0 +1,129 @@
+==================================================================
+  02 - SQL E BANCO DE DADOS
+==================================================================
+
+O QUE É UM BANCO DE DADOS?
+  Pense numa planilha do Excel:
+    - O BANCO é o arquivo inteiro (ex.: "loja")
+    - Cada TABELA é uma aba da planilha (ex.: "produtos", "usuarios")
+    - Cada COLUNA é um campo (ex.: nome, preço, quantidade)
+    - Cada LINHA é um registro (ex.: "Martelo, 25.90, 10")
+
+  SQL é a "língua" que você usa pra conversar com o banco.
+
+------------------------------------------------------------------
+ ARQUIVOS DESTA PASTA (abra e leia os comentários)
+------------------------------------------------------------------
+  01-criar-banco-e-tabelas.sql ... CREATE DATABASE, CREATE TABLE,
+                                   tipos de dados, chave primária,
+                                   chave estrangeira
+  02-inserir-dados.sql ........... INSERT (colocar dados)
+  03-consultar-dados.sql ......... SELECT, WHERE, ORDER BY, LIKE,
+                                   COUNT, SUM, JOIN
+  04-alterar-e-apagar.sql ........ UPDATE e DELETE
+  05-alterar-tabela.sql .......... ALTER TABLE (adicionar coluna
+                                   depois que a tabela já existe),
+                                   DROP
+
+  Rode na ordem 01, 02, 03, 04 no phpMyAdmin (aba SQL) pra ver
+  funcionando. Eles usam um banco de teste chamado "escola_teste".
+
+------------------------------------------------------------------
+ OS COMANDOS QUE MAIS CAEM (decore a forma)
+------------------------------------------------------------------
+  CRIAR BANCO:
+    CREATE DATABASE nome_do_banco;
+    USE nome_do_banco;
+
+  CRIAR TABELA:
+    CREATE TABLE produtos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(100) NOT NULL,
+        preco DECIMAL(10,2),
+        quantidade INT DEFAULT 0
+    );
+
+  INSERIR (Create do CRUD):
+    INSERT INTO produtos (nome, preco, quantidade)
+    VALUES ('Martelo', 25.90, 10);
+
+  BUSCAR (Read do CRUD):
+    SELECT * FROM produtos;
+    SELECT * FROM produtos WHERE id = 1;
+    SELECT * FROM produtos WHERE nome LIKE '%mart%';
+    SELECT * FROM produtos ORDER BY nome ASC;
+
+  ALTERAR (Update do CRUD):
+    UPDATE produtos SET preco = 30.00 WHERE id = 1;
+
+  APAGAR (Delete do CRUD):
+    DELETE FROM produtos WHERE id = 1;
+
+  !!! NUNCA ESQUEÇA O WHERE NO UPDATE E NO DELETE !!!
+  Sem WHERE, ele altera/apaga TODAS as linhas da tabela.
+
+------------------------------------------------------------------
+ TIPOS DE DADOS (o que colocar depois do nome da coluna)
+------------------------------------------------------------------
+  INT ................ número inteiro (1, 25, -3). Use pra id,
+                       quantidade, idade.
+  DECIMAL(10,2) ...... número com vírgula, ex. dinheiro (25.90).
+                       10 dígitos no total, 2 depois da vírgula.
+                       No SQL a vírgula é PONTO: 25.90
+  VARCHAR(100) ....... texto curto, até 100 letras (nome, email)
+  TEXT ............... texto grande (descrição, observação)
+  DATE ............... data: '2026-11-17'  (ano-mês-dia!)
+  DATETIME ........... data e hora: '2026-11-17 14:30:00'
+  TIMESTAMP .......... igual DATETIME, e pode preencher sozinho
+                       com DEFAULT CURRENT_TIMESTAMP
+  ENUM('a','b') ...... só aceita um dos valores da lista
+  BOOLEAN ............ verdadeiro/falso (vira 1 ou 0)
+
+------------------------------------------------------------------
+ PALAVRAS IMPORTANTES
+------------------------------------------------------------------
+  PRIMARY KEY (chave primária, PK)
+     A coluna que identifica cada linha de forma única. Quase sempre
+     é o "id". Não pode repetir e não pode ficar vazia.
+
+  AUTO_INCREMENT
+     O banco preenche o id sozinho: 1, 2, 3, 4... Você não precisa
+     mandar o id no INSERT.
+
+  FOREIGN KEY (chave estrangeira, FK)
+     Uma coluna que "aponta" pro id de OUTRA tabela. É assim que as
+     tabelas se ligam. Ex.: a tabela movimentacoes tem produto_id,
+     que aponta pro id da tabela produtos.
+     FOREIGN KEY (produto_id) REFERENCES produtos(id)
+
+  NOT NULL
+     O campo é obrigatório (não pode ficar vazio).
+
+  DEFAULT
+     Valor padrão se você não mandar nada.
+
+  UNIQUE
+     Não pode repetir (bom pra email ou login).
+
+  JOIN
+     Junta duas tabelas numa consulta só, usando a chave estrangeira.
+     Ex.: mostrar o NOME do produto na lista de movimentações.
+
+------------------------------------------------------------------
+ ERROS COMUNS DE SQL
+------------------------------------------------------------------
+  - Esquecer o ponto e vírgula ; no final de cada comando.
+  - Texto sem aspas simples:  WHERE nome = Martelo   (ERRADO)
+                              WHERE nome = 'Martelo' (CERTO)
+  - Número COM aspas não dá erro, mas número sem aspas é o certo.
+  - Data no formato brasileiro: '17/11/2026' (ERRADO)
+                                '2026-11-17' (CERTO)
+  - Vírgula no lugar do ponto: 25,90 (ERRADO)  25.90 (CERTO)
+  - Vírgula sobrando antes do ) no CREATE TABLE:
+        nome VARCHAR(100),
+    );   <- ERRO! a última coluna não leva vírgula
+  - "Table already exists": a tabela já existe. Use
+    DROP DATABASE nome; e rode de novo, ou use IF NOT EXISTS.
+  - Criar a tabela com FOREIGN KEY ANTES da tabela que ela aponta.
+    Crie primeiro a tabela "pai" (produtos), depois a "filha"
+    (movimentacoes).

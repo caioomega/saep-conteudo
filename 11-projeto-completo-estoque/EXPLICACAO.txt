@@ -1,0 +1,128 @@
+==================================================================
+  11 - PROJETO COMPLETO: SISTEMA DE CONTROLE DE ESTOQUE
+  >>> ESTE É O MODELO PRA PROVA <<<
+==================================================================
+
+Este sistema faz tudo que a prova prática do SAEP costuma pedir:
+  [x] Login com usuário e senha (senha criptografada)
+  [x] Mensagem de erro se o login falhar
+  [x] Tela principal mostrando o NOME do usuário + botão SAIR
+  [x] Páginas protegidas (sem login não entra)
+  [x] Cadastro de produtos: listar, BUSCAR, inserir, editar, excluir
+  [x] Validação dos campos (no HTML e no PHP)
+  [x] Gestão de estoque: produtos em ordem alfabética com ALGORITMO
+      de ordenação (Bubble Sort), entrada e saída, DATA da
+      movimentação, não deixa sair mais do que tem
+  [x] ALERTA quando o estoque fica abaixo do mínimo
+  [x] Histórico das movimentações (com quem fez e quando)
+  [x] Script SQL com 3 tabelas e 3 registros em cada
+
+------------------------------------------------------------------
+ COMO FAZER FUNCIONAR
+------------------------------------------------------------------
+  1. XAMPP: Start no Apache e no MySQL.
+  2. localhost/phpmyadmin > aba SQL > cole o banco.sql > Executar.
+  3. Copie a pasta 11-projeto-completo-estoque pra C:\xampp\htdocs\
+     (pode renomear pra "estoque" pra ficar mais curto)
+  4. Abra:  localhost/estoque/   (ou o nome que você deu)
+  5. Login: admin   Senha: 123
+
+------------------------------------------------------------------
+ MAPA DOS ARQUIVOS
+------------------------------------------------------------------
+  banco.sql ............... cria o banco saep_estoque (3 tabelas)
+  conexao.php ............. conecta no banco (usuário/senha aqui)
+  funcoes.php ............. funções: Bubble Sort, validação,
+                            formatar dinheiro e data
+  verifica_login.php ...... bloqueia quem não fez login
+  topo.php / rodape.php ... começo e fim do HTML + menu (iguais em
+                            todas as páginas, pra não repetir)
+  estilo.css .............. aparência
+
+  index.php ............... só manda pro login
+  login.php ............... tela de login
+  logout.php .............. sair
+  principal.php ........... tela inicial (nome + menus + alertas)
+  produtos.php ............ lista + busca de produtos
+  produto_cadastrar.php ... formulário de novo produto
+  produto_editar.php ...... formulário de editar produto
+  produto_excluir.php ..... apaga produto
+  estoque.php ............. GESTÃO DE ESTOQUE (entrada/saída, alerta,
+                            lista ordenada com Bubble Sort)
+  historico.php ........... todas as movimentações (JOIN de 3
+                            tabelas)
+
+------------------------------------------------------------------
+ COMO O FLUXO FUNCIONA
+------------------------------------------------------------------
+  login.php
+     | acertou a senha -> guarda id e nome na $_SESSION
+     v
+  principal.php  (topo mostra "Usuário: Fulano" e o menu)
+     |-- produtos.php ---- produto_cadastrar.php
+     |                 |-- produto_editar.php?id=X
+     |                 |-- produto_excluir.php?id=X
+     |-- estoque.php ----- registra entrada/saída:
+     |                       1. valida
+     |                       2. INSERT em movimentacoes
+     |                       3. UPDATE na quantidade do produto
+     |                       4. se ficou abaixo do mínimo -> ALERTA
+     |-- historico.php
+     |-- logout.php  -> volta pro login
+
+------------------------------------------------------------------
+ COMO ADAPTAR PRO TEMA DA SUA PROVA (passo a passo)
+------------------------------------------------------------------
+  Exemplo: a prova pede controle de LIVROS de uma biblioteca, com
+  campos título, autor, editora, quantidade e mínimo.
+
+  1. banco.sql:
+     - troque o nome do banco (saep_estoque -> saep_biblioteca)
+     - na tabela produtos troque as colunas: nome->titulo,
+       categoria->autor, marca->editora... (ou crie as suas)
+     - ajuste os INSERT com 3 registros do seu tema
+     - rode no phpMyAdmin
+
+  2. conexao.php: troque o nome do banco.
+
+  3. Campos: o jeito mais seguro é MANTER o nome das tabelas e
+     colunas (produtos, nome, quantidade...) e só trocar os TEXTOS
+     que aparecem na tela ("Produto" -> "Livro"). Assim você não
+     quebra o código. Se a prova exigir nomes específicos de
+     colunas, aí troque com Ctrl + H com cuidado, arquivo por
+     arquivo, e teste depois de cada um.
+
+  4. Se a prova pedir um campo a mais (ex.: "localização"):
+     a) ALTER TABLE produtos ADD localizacao VARCHAR(50);
+     b) produto_cadastrar.php: adicione 'localizacao' => '' no
+        array $p, o <input name="localizacao"> no formulário e a
+        coluna no INSERT
+     c) produto_editar.php: adicione 'localizacao' na lista do
+        foreach, o <input> e a coluna no UPDATE
+     d) produtos.php: um <th> e um <td> na tabela
+
+  5. Se a prova pedir menos coisas, pode apagar (ex.: tirar o
+     histórico: apague historico.php e o link no topo.php).
+
+  6. TESTE TUDO no final, na ordem dos casos de teste da pasta 10.
+
+------------------------------------------------------------------
+ PERGUNTAS QUE O AVALIADOR PODE FAZER (e as respostas)
+------------------------------------------------------------------
+  "Onde está o algoritmo de ordenação?"
+     -> funcoes.php, função bubbleSortPorCampo, usada no estoque.php
+        através da função produtosOrdenados.
+  "Como o sistema sabe quem está logado?"
+     -> Pela $_SESSION, preenchida no login.php.
+  "Como impede acesso sem login?"
+     -> verifica_login.php incluído no topo de cada página.
+  "Como funciona o alerta?"
+     -> Depois de salvar a movimentação, compara a nova quantidade
+        com o estoque_minimo. Se for menor, mostra a mensagem e um
+        alert() do JavaScript. A tela principal e as listas também
+        destacam em vermelho os produtos abaixo do mínimo.
+  "E se tentar tirar mais do que tem?"
+     -> A validação no estoque.php bloqueia e mostra o disponível.
+  "Como a senha é guardada?"
+     -> Criptografada com password_hash e conferida com
+        password_verify.

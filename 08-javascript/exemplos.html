@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de JavaScript</title>
+    <link rel="stylesheet" href="../04-html-css/estilo.css">
+</head>
+<body>
+<div class="conteudo">
+    <h1>JavaScript - exemplos que caem na prova</h1>
+    <p>Dê dois cliques neste arquivo pra abrir no navegador (não precisa de XAMPP).
+       Abra também no editor pra ler os comentários.</p>
+
+    <!-- ======================================================
+         1) CONFIRMAR ANTES DE EXCLUIR
+         confirm() mostra uma caixinha com OK / Cancelar.
+         "return false" cancela o clique do link.
+         ====================================================== -->
+    <h2>1. Confirmar exclusão</h2>
+    <a href="#excluiu" class="botao botao-perigo"
+       onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+
+    <!-- ======================================================
+         2) ALERTA (mensagem que precisa clicar OK)
+         ====================================================== -->
+    <h2>2. Alerta</h2>
+    <button onclick="alert('Atenção: estoque abaixo do mínimo!');">Mostrar alerta</button>
+
+    <!-- ======================================================
+         3) VALIDAR FORMULÁRIO ANTES DE ENVIAR
+         onsubmit="return validar()" -> se a função devolver false,
+         o formulário NÃO é enviado.
+         ====================================================== -->
+    <h2>3. Validar formulário</h2>
+    <div id="erros"></div>
+    <form action="#enviou" onsubmit="return validar();">
+        <label for="nome">Nome *</label>
+        <input type="text" id="nome" name="nome">
+
+        <label for="quantidade">Quantidade *</label>
+        <input type="number" id="quantidade" name="quantidade">
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <!-- ======================================================
+         4) MOSTRAR/ESCONDER E MUDAR TEXTO DA PÁGINA
+         ====================================================== -->
+    <h2>4. Mudar a página</h2>
+    <p id="texto">Texto original</p>
+    <button onclick="mudarTexto()">Mudar texto</button>
+    <button onclick="esconder()">Mostrar/Esconder</button>
+
+    <!-- ======================================================
+         5) ORDENAR UMA LISTA COM BUBBLE SORT (ver pasta 09)
+         ====================================================== -->
+    <h2>5. Ordenar com Bubble Sort</h2>
+    <p id="lista-original"></p>
+    <p id="lista-ordenada"></p>
+    <button onclick="ordenarNaTela()">Ordenar</button>
+</div>
+
+<!-- O JavaScript vai no final do body (assim os elementos já existem) -->
+<script>
+    // ---------- 3) VALIDAR ----------
+    function validar() {
+        // document.getElementById("x") pega o elemento que tem id="x"
+        // .value = o que a pessoa digitou
+        let nome = document.getElementById("nome").value.trim();
+        let quantidade = document.getElementById("quantidade").value;
+        let erros = "";
+
+        if (nome === "") {
+            erros += "Preencha o nome.<br>";
+        }
+        if (quantidade === "" || Number(quantidade) < 0) {
+            erros += "Quantidade tem que ser zero ou mais.<br>";
+        }
+
+        if (erros !== "") {
+            // innerHTML = troca o conteúdo HTML do elemento
+            document.getElementById("erros").innerHTML =
+                '<div class="mensagem erro">' + erros + '</div>';
+            return false;   // NÃO envia
+        }
+        return true;        // pode enviar
+    }
+
+    // ---------- 4) MUDAR A PÁGINA ----------
+    function mudarTexto() {
+        let p = document.getElementById("texto");
+        p.innerText = "Texto mudado pelo JavaScript!";
+        p.style.color = "red";
+    }
+
+    function esconder() {
+        let p = document.getElementById("texto");
+        if (p.style.display === "none") {
+            p.style.display = "block";
+        } else {
+            p.style.display = "none";
+        }
+    }
+
+    // ---------- 5) BUBBLE SORT ----------
+    let nomes = ["Serrote", "alicate", "Martelo", "Chave de fenda", "Broca"];
+    document.getElementById("lista-original").innerText = "Original: " + nomes.join(", ");
+
+    function bubbleSort(lista) {
+        let v = lista.slice();  // copia pra não estragar a original
+        for (let i = 0; i < v.length - 1; i++) {
+            for (let j = 0; j < v.length - 1 - i; j++) {
+                // localeCompare compara texto (ignora maiúscula com sensitivity base)
+                if (v[j].localeCompare(v[j + 1], 'pt-BR', { sensitivity: 'base' }) > 0) {
+                    let temp = v[j];      // troca os dois de lugar
+                    v[j] = v[j + 1];
+                    v[j + 1] = temp;
+                }
+            }
+        }
+        return v;
+    }
+
+    function ordenarNaTela() {
+        document.getElementById("lista-ordenada").innerText =
+            "Ordenada: " + bubbleSort(nomes).join(", ");
+    }
+
+    // console.log mostra coisas no Console (F12 > aba Console). Ótimo pra achar erro.
+    console.log("JavaScript carregado!");
+</script>
+</body>
+</html>

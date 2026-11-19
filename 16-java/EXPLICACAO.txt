@@ -1,0 +1,84 @@
+==================================================================
+  16 - JAVA
+==================================================================
+
+  NO SEU PC: o Java 21 que vem junto com o Android Studio está em
+    C:\Program Files\Android\Android Studio\jbr\bin
+  Ele NÃO está no PATH, então digitar "java" no terminal não
+  funciona. Os arquivos rodar.bat já usam esse caminho sozinhos.
+
+------------------------------------------------------------------
+ PASTAS
+------------------------------------------------------------------
+  console\ .. CRUD de produtos no terminal (menu com números):
+              login, listar em ordem (Bubble Sort), cadastrar,
+              editar, excluir, buscar, entrada/saída, alerta.
+              Ensina: classe, objeto, ArrayList, Scanner, switch,
+              try/catch.
+              -> dois cliques no console\rodar.bat
+  swing\ .... o mesmo CRUD com JANELA (botões, campos, tabela,
+              caixas de mensagem).
+              -> dois cliques no swing\rodar.bat
+  jdbc\ ..... Java conversando com o MySQL (banco da pasta 11).
+              Precisa do driver .jar (ver abaixo).
+
+------------------------------------------------------------------
+ COMO COMPILAR E RODAR NA MÃO (terminal PowerShell, na pasta)
+------------------------------------------------------------------
+  $J = "C:\Program Files\Android\Android Studio\jbr\bin"
+  & "$J\javac.exe" -encoding UTF-8 *.java      (compila: gera .class)
+  & "$J\java.exe" SistemaEstoque               (roda; sem o .java)
+
+  Ou no Android Studio / IntelliJ / NetBeans / Eclipse, se tiver na
+  prova: crie um projeto Java, cole os arquivos em src e clique no
+  botão verde de "Run" (▶).
+
+------------------------------------------------------------------
+ JDBC (JAVA + MYSQL) - O PROBLEMA DO DRIVER
+------------------------------------------------------------------
+  Pra o Java falar com o MySQL ele precisa de um arquivo chamado
+  mysql-connector-j-X.X.X.jar (o "driver"). Ele NÃO vem com o Java.
+  - BAIXE ANTES DA PROVA (com internet), no site oficial do MySQL
+    (dev.mysql.com > Downloads > Connector/J > "Platform
+    Independent" > ZIP) e coloque o .jar dentro da pasta jdbc\.
+  - Ou pergunte se o PC da prova já tem (às vezes vem no NetBeans).
+
+  Com o .jar na pasta jdbc\:
+    & "$J\javac.exe" -encoding UTF-8 ProdutoDAO.java
+    & "$J\java.exe" -cp ".;mysql-connector-j-9.1.0.jar" ProdutoDAO
+  (troque o nome do .jar pelo que você baixou. O ";" é do Windows.)
+
+------------------------------------------------------------------
+ JAVA EM 2 MINUTOS (diferenças do PHP)
+------------------------------------------------------------------
+  - Tudo fica dentro de uma CLASSE. O nome do arquivo tem que ser
+    IGUAL ao nome da classe pública (Produto.java -> class Produto).
+  - O programa começa no  public static void main(String[] args)
+  - Variável TEM TIPO e não tem $:
+        int idade = 17;   double preco = 9.90;   String nome = "Ana";
+        boolean ativo = true;
+  - Texto compara com .equals():   nome.equals("admin")   (não ==)
+  - Mostrar na tela:  System.out.println("Olá " + nome);
+  - Ler do teclado:   Scanner sc = new Scanner(System.in);
+                      String s = sc.nextLine();
+  - Texto -> número:  Integer.parseInt("10")   Double.parseDouble("9.9")
+  - Lista:            ArrayList<Produto> lista = new ArrayList<>();
+                      lista.add(p); lista.get(0); lista.size();
+                      lista.remove(p);
+  - Erro de número:   try { ... } catch (NumberFormatException e) { ... }
+  - Toda linha termina com ;   e o Java diferencia maiúsculas.
+
+------------------------------------------------------------------
+ ERROS COMUNS
+------------------------------------------------------------------
+  "class X is public, should be declared in a file named X.java"
+     -> nome do arquivo diferente do nome da classe.
+  "cannot find symbol"
+     -> nome escrito errado, ou falta import, ou variável não criada.
+  "';' expected"  -> faltou ponto e vírgula na linha indicada.
+  "Could not find or load main class"
+     -> rodou com .java ou .class no nome, ou está na pasta errada.
+  "No suitable driver found for jdbc:mysql"
+     -> faltou o .jar do MySQL no -cp.
+  "Communications link failure" -> MySQL desligado.
+  "Access denied for user 'root'" -> senha errada no ProdutoDAO.

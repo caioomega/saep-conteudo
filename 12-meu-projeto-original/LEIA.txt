@@ -1,0 +1,24 @@
+==================================================================
+  12 - O SEU PROJETO ORIGINAL
+==================================================================
+
+Estes são os arquivos que já estavam na pasta "crud_simples-main",
+do jeito que estavam (só foram movidos pra cá, nada foi alterado).
+
+É um controle de estoque de loja de materiais:
+  loja_materiais.sql ... banco loja_materiais (produtos + movimentacoes)
+  conexao.php .......... conexão
+  funcoes.php .......... todas as funções (listar, gravar, alterar,
+                         excluir, registrar movimentação)
+  index.php ............ menu
+  cadastro.php ......... cadastrar produto
+  listar.php ........... listar + excluir
+  alterar.php .......... editar
+  estoque.php .......... entrada/saída
+  saidas.php ........... lista de saídas (JOIN)
+
+Pra rodar: banco loja_materiais.sql no phpMyAdmin, pasta no htdocs,
+localhost/12-meu-projeto-original/
+
+Ele NÃO tem login, busca, algoritmo de ordenação nem alerta em
+janela. A versão completa com tudo isso está na pasta 11.

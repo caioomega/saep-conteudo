@@ -1,0 +1,66 @@
+==================================================================
+  18 - POO (PROGRAMAÇÃO ORIENTADA A OBJETOS)
+==================================================================
+
+  Cai MUITO em pergunta e às vezes a prova pede "utilizar
+  orientação a objetos". Se pedir, use o ProdutoDAO.php desta pasta
+  como base no lugar das funções soltas.
+
+------------------------------------------------------------------
+ ARQUIVOS
+------------------------------------------------------------------
+  exemplo-poo.php ... classe, objeto, encapsulamento, herança,
+                      polimorfismo, interface (PHP)
+  ProdutoDAO.php .... CRUD com classe + PDO (banco da pasta 11)
+  (Java com POO: 16-java/console/Produto.java)
+
+  Rodar: copie a pasta pro htdocs e abra no navegador.
+
+------------------------------------------------------------------
+ O VOCABULÁRIO (decore isto)
+------------------------------------------------------------------
+  CLASSE ......... o MOLDE. Ex.: a planta de uma casa.
+                   class Produto { ... }
+  OBJETO ......... uma coisa criada a partir do molde (instância).
+                   $p = new Produto(...);
+  ATRIBUTO ....... característica (variável da classe): nome, preço
+  MÉTODO ......... ação (função da classe): calcularPreco()
+  CONSTRUTOR ..... método que roda quando cria o objeto
+                   (PHP: __construct  | Java: mesmo nome da classe)
+  $this / this ... "este objeto aqui"
+
+  OS 4 PILARES:
+  1. ENCAPSULAMENTO  esconder os dados (private) e só deixar mexer
+                     por métodos (get/set) que podem validar.
+  2. HERANÇA ........ uma classe filha aproveita tudo da classe pai.
+                      PHP/Java: class Filha extends Pai
+                      "ProdutoPromocional É UM Produto"
+  3. POLIMORFISMO ... o mesmo método se comporta diferente em cada
+                      classe (sobrescrita). calcularPreco() do
+                      promocional dá desconto, o normal não.
+  4. ABSTRAÇÃO ...... mostrar só o essencial; usar classes
+                      abstratas e interfaces como "contratos".
+
+  VISIBILIDADE:
+     public ...... todo mundo acessa
+     private ..... só a própria classe
+     protected ... a classe e as filhas
+
+  OUTROS TERMOS:
+     static ........ pertence à classe, não ao objeto
+     interface ..... lista de métodos obrigatórios (contrato)
+     abstract ...... classe que não pode ser instanciada (só herdada)
+     sobrecarga .... mesmo nome de método, parâmetros diferentes
+                     (existe em Java, não em PHP)
+     sobrescrita ... filha reescreve método do pai (@Override)
+
+------------------------------------------------------------------
+ PADRÕES QUE APARECEM
+------------------------------------------------------------------
+  DAO (Data Access Object): uma classe só pra falar com o banco
+     (ProdutoDAO). Separa o "banco" das "telas".
+  MVC (Model - View - Controller):
+     Model ....... os dados e regras (Produto, ProdutoDAO)
+     View ........ as telas (HTML)
+     Controller .. recebe o que a pessoa fez e chama o model
+                   (os if POST do PHP)

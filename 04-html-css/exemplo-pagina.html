@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- ^ Sempre a primeira linha: diz que é HTML5 -->
+<html lang="pt-br">
+<head>
+    <!-- charset UTF-8 = acentos funcionando -->
+    <meta charset="UTF-8">
+    <!-- deixa a página certinha no celular -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- texto que aparece na aba do navegador -->
+    <title>Exemplo de página</title>
+    <!-- liga o arquivo de estilo (CSS) -->
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <!-- TOPO com o menu -->
+    <div class="topo">
+        <strong>Meu Sistema</strong>
+        <div>
+            <a href="#">Início</a>
+            <a href="#">Produtos</a>
+            <a href="#">Sair</a>
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <h1>Título da página</h1>
+        <p>Isto é um parágrafo. <strong>Isto é negrito.</strong> <em>Isto é itálico.</em></p>
+
+        <!-- MENSAGENS (você vai mostrar com PHP depois) -->
+        <div class="mensagem sucesso">Produto salvo com sucesso!</div>
+        <div class="mensagem erro">Preencha o nome.</div>
+        <div class="mensagem aviso">Atenção: estoque abaixo do mínimo!</div>
+
+        <h2>Formulário</h2>
+        <!--
+            FORMULÁRIO:
+            action = pra qual arquivo os dados vão quando clicar no botão
+            method = "post" (dados escondidos, use pra salvar)
+                     ou "get" (dados aparecem na URL, use pra busca)
+            Cada campo precisa de um "name": é com esse nome que o PHP
+            vai pegar o valor ($_POST['nome']).
+        -->
+        <form action="salvar.php" method="post">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required placeholder="Digite o nome">
+            <!-- required = o navegador não deixa enviar vazio -->
+
+            <label for="preco">Preço</label>
+            <input type="number" id="preco" name="preco" step="0.01" min="0">
+            <!-- step="0.01" deixa digitar centavos; min="0" não deixa negativo -->
+
+            <label for="quantidade">Quantidade</label>
+            <input type="number" id="quantidade" name="quantidade" min="0" value="0">
+
+            <label for="data">Data</label>
+            <input type="date" id="data" name="data">
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email">
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha">
+
+            <label for="categoria">Categoria (lista de opções)</label>
+            <select id="categoria" name="categoria">
+                <option value="">-- escolha --</option>
+                <option value="ferramenta">Ferramenta</option>
+                <option value="eletrico">Elétrico</option>
+            </select>
+
+            <label>Tipo (escolha um)</label>
+            <input type="radio" name="tipo" value="entrada" id="ent" style="width:auto" checked> <label for="ent" style="display:inline">Entrada</label>
+            <input type="radio" name="tipo" value="saida" id="sai" style="width:auto"> <label for="sai" style="display:inline">Saída</label>
+
+            <label for="descricao">Descrição (texto grande)</label>
+            <textarea id="descricao" name="descricao"></textarea>
+
+            <!-- campo escondido: vai junto com o formulário mas não aparece -->
+            <input type="hidden" name="id" value="5">
+
+            <button type="submit">Salvar</button>
+            <a href="#" class="botao botao-perigo">Cancelar</a>
+        </form>
+
+        <h2>Tabela</h2>
+        <!-- table > tr (linha) > th (cabeçalho) ou td (célula) -->
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Ações</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Martelo</td>
+                <td>10</td>
+                <td>
+                    <a href="#" class="botao botao-pequeno">Editar</a>
+                    <a href="#" class="botao botao-pequeno botao-perigo">Excluir</a>
+                </td>
+            </tr>
+            <tr class="linha-alerta">
+                <td>2</td>
+                <td>Furadeira</td>
+                <td>1</td>
+                <td>
+                    <a href="#" class="botao botao-pequeno">Editar</a>
+                    <a href="#" class="botao botao-pequeno botao-perigo">Excluir</a>
+                </td>
+            </tr>
+        </table>
+
+        <h2>Lista e link</h2>
+        <ul>
+            <li>Item de lista</li>
+            <li><a href="https://exemplo.com">Um link</a></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+==================================================================
+  LISTA DE INFRAESTRUTURA / AMBIENTE DE DESENVOLVIMENTO
+  (CONFIRA AS VERSÕES NO PC DA PROVA - veja EXPLICACAO.txt)
+==================================================================
+
+HARDWARE
+  - Computador desktop com processador x64, 8 GB de RAM (confira)
+  - Teclado, mouse e monitor
+
+SISTEMA OPERACIONAL
+  - Windows 11 (64 bits)                     versão: ________
+
+SERVIDOR / PACOTE
+  - XAMPP                                     versão: ________
+    - Servidor web Apache                    versão: ________
+    - PHP                                     versão: 8.0.30 (confira)
+
+BANCO DE DADOS
+  - SGBD: MySQL (ou MariaDB do XAMPP)        versão: ________
+  - Ferramenta de administração: phpMyAdmin  versão: ________
+  - Modelagem do DER: MySQL Workbench        versão: 8.0 CE
+
+LINGUAGENS
+  - PHP (back-end, regras e acesso ao banco)
+  - SQL (criação e manipulação do banco)
+  - HTML5 (estrutura das telas)
+  - CSS3 (estilo das telas)
+  - JavaScript (confirmação de exclusão e alertas)
+
+EDITOR DE CÓDIGO
+  - Visual Studio Code (ou o que usou)        versão: ________
+
+NAVEGADOR UTILIZADO NOS TESTES
+  - Google Chrome / Microsoft Edge            versão: ________
+
+BANCO DE DADOS DO SISTEMA
+  - Nome do banco: saep_estoque
+  - Tabelas: usuarios, produtos, movimentacoes
+  - Arquivo de criação: banco.sql
+
+COMO EXECUTAR O SISTEMA
+  1. Iniciar Apache e MySQL no XAMPP Control Panel.
+  2. Executar o script banco.sql no phpMyAdmin.
+  3. Copiar a pasta do sistema para C:\xampp\htdocs\
+  4. Acessar http://localhost/estoque/ no navegador.
+  5. Entrar com login "admin" e senha "123".

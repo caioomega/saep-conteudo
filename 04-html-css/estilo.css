@@ -1,0 +1,118 @@
+/* ==============================================================
+   ESTILO.CSS - CSS PRONTO PRA USAR EM QUALQUER PÁGINA
+   Pra usar, coloque no <head> do HTML:
+       <link rel="stylesheet" href="estilo.css">
+   (o arquivo estilo.css tem que estar na MESMA pasta da página)
+   ============================================================== */
+
+/* Variáveis de cor: troque aqui e muda o site inteiro */
+:root {
+    --cor-principal: #1f4e79;   /* azul escuro (botões, topo) */
+    --cor-fundo: #f2f4f7;       /* cinza clarinho do fundo */
+    --cor-texto: #222;
+    --cor-perigo: #c0392b;      /* vermelho (excluir, alerta) */
+    --cor-sucesso: #1e8449;     /* verde (mensagem de sucesso) */
+    --cor-aviso: #b9770e;       /* laranja (estoque baixo) */
+}
+
+/* box-sizing faz a largura incluir a borda e o espaçamento (evita bagunça) */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+/* ---------- TOPO / MENU ---------- */
+.topo {
+    background: var(--cor-principal);
+    color: white;
+    padding: 12px 24px;
+    display: flex;                 /* coloca os itens lado a lado */
+    justify-content: space-between;/* um na esquerda, outro na direita */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.topo a { color: white; text-decoration: none; margin-left: 16px; }
+.topo a:hover { text-decoration: underline; }
+
+/* ---------- CAIXA CENTRAL ---------- */
+.conteudo {
+    max-width: 1000px;
+    margin: 24px auto;    /* auto nas laterais = centraliza */
+    padding: 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+h1 { margin-top: 0; }
+
+/* ---------- FORMULÁRIO ---------- */
+label { display: block; margin-top: 12px; font-weight: bold; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 15px;
+}
+textarea { min-height: 80px; }
+
+/* ---------- BOTÕES ---------- */
+button, .botao {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 9px 18px;
+    background: var(--cor-principal);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;        /* mãozinha ao passar o mouse */
+    text-decoration: none;
+}
+button:hover, .botao:hover { opacity: 0.85; }
+.botao-perigo { background: var(--cor-perigo); }
+.botao-pequeno { padding: 5px 10px; font-size: 13px; margin-top: 0; }
+
+/* ---------- TABELA ---------- */
+table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: left; }
+th { background: var(--cor-principal); color: white; }
+tr:hover td { background: #f7f9fc; }
+
+/* ---------- MENSAGENS ---------- */
+.mensagem { padding: 10px 14px; border-radius: 4px; margin: 12px 0; }
+.sucesso { background: #e9f7ef; color: var(--cor-sucesso); border: 1px solid var(--cor-sucesso); }
+.erro    { background: #fdedec; color: var(--cor-perigo);  border: 1px solid var(--cor-perigo); }
+.aviso   { background: #fef5e7; color: var(--cor-aviso);   border: 1px solid var(--cor-aviso); }
+
+/* Linha da tabela destacada (ex.: estoque baixo) */
+.linha-alerta td { background: #fdedec; }
+
+/* ---------- CAIXA DE LOGIN ---------- */
+.caixa-login {
+    max-width: 360px;
+    margin: 80px auto;
+    padding: 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+/* ---------- BARRA DE BUSCA (input e botão lado a lado) ---------- */
+.busca { display: flex; gap: 8px; align-items: flex-end; }
+.busca input { flex: 1; }
+.busca button { margin-top: 0; }
+
+/* ---------- CELULAR: ajusta em telas pequenas ---------- */
+@media (max-width: 600px) {
+    .conteudo { margin: 0; border-radius: 0; padding: 16px; }
+    table { font-size: 13px; }
+}
